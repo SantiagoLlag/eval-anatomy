@@ -1,0 +1,96 @@
+{
+  "meta": {
+    "title": "eval-anatomy",
+    "description": "Visor y catálogo de evals de IA: las partes de una eval, qué falta en la tuya y cómo corre."
+  },
+  "nav": {
+    "label": "Principal",
+    "home": "Inicio",
+    "anatomy": "Anatomía",
+    "catalog": "Catálogo",
+    "inspect": "Inspeccionar",
+    "sources": "Fuentes"
+  },
+  "header": {
+    "github": "Código en GitHub",
+    "skip": "Saltar al contenido"
+  },
+  "language": {
+    "label": "Idioma",
+    "es": "Español",
+    "en": "English"
+  },
+  "theme": {
+    "label": "Tema",
+    "system": "Sistema",
+    "light": "Claro",
+    "dark": "Oscuro"
+  },
+  "footer": {
+    "code": "Código: licencia MIT.",
+    "content": "Contenido: licencia CC BY 4.0."
+  },
+  "home": {
+    "title": "Qué es una eval",
+    "lead": "Una eval es una prueba repetible que dice si un sistema de IA hace bien una tarea. Tiene casos, un calificador y una regla para decidir.",
+    "body": "Esta página muestra las 16 partes que toda eval tiene, revisa cuáles faltan en la tuya y dibuja cómo corre.",
+    "anatomyTitle": "Anatomía",
+    "anatomyText": "Las 16 partes, con definición, buenas prácticas y fuentes.",
+    "catalogTitle": "Catálogo",
+    "catalogText": "Evals abiertas que cualquiera puede revisar y mejorar.",
+    "inspectTitle": "Inspeccionar",
+    "inspectText": "Sube o pega tu eval y mira qué partes tiene."
+  },
+  "anatomy": {
+    "title": "Anatomía de una eval",
+    "soon": "El diagrama llega en una próxima versión. Por ahora, estas son las partes por grupo.",
+    "required": "obligatoria",
+    "recommended": "recomendada",
+    "conditional": "condicional"
+  },
+  "catalog": {
+    "title": "Catálogo",
+    "lead": "Evals del catálogo. Los filtros llegan en una próxima versión.",
+    "empty": "Todavía no hay evals en el catálogo.",
+    "open": "Ver eval",
+    "language": "Idioma de la eval",
+    "version": "Versión",
+    "status": "Estado",
+    "soon": "Las pestañas de anatomía, flujo y revisión llegan en una próxima versión.",
+    "back": "Volver al catálogo"
+  },
+  "inspect": {
+    "title": "Inspeccionar una eval",
+    "soon": "Aquí podrás subir o pegar una eval en cualquier formato conocido. Llega en una próxima versión."
+  },
+  "sources": {
+    "title": "Fuentes",
+    "lead": "Todo el texto de investigación cita estas fuentes. Cada una tiene un nivel de evidencia y un estado de verificación.",
+    "filterLabel": "Filtrar por línea de investigación",
+    "filterAll": "Todas",
+    "count": "{shown} de {total} fuentes",
+    "colTitle": "Título",
+    "colAuthors": "Autores",
+    "colEvidence": "Evidencia",
+    "colStatus": "Estado",
+    "colLink": "Enlace",
+    "open": "Abrir fuente",
+    "noLink": "Sin enlace",
+    "verified": "verificada",
+    "unverified": "sin verificar",
+    "evidence": {
+      "guia-oficial": "Guía oficial",
+      "opinion-experta": "Opinión experta",
+      "experimento": "Experimento"
+    },
+    "status": {
+      "CONFIRMADA": "Confirmada",
+      "MATIZADA-corregida": "Matizada y corregida"
+    },
+    "note": "Los títulos y las líneas de investigación están en el idioma original de la investigación."
+  },
+  "notFound": {
+    "title": "Página no encontrada",
+    "back": "Ir al inicio"
+  }
+}
