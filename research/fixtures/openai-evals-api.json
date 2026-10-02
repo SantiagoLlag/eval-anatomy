@@ -1,0 +1,110 @@
+{
+  "//": "Fixture C2 · eval de ejemplo común: '¿El asistente de soporte responde sin inventar políticas?'. Formato: Evals API de OpenAI (formato nuevo). Este archivo agrupa dos cuerpos nativos de petición: crear la eval y crear una corrida. La clave '//' es un comentario y no forma parte del formato; quítala antes de enviar. Doc seguida (consultada 2026-10-02): https://developers.openai.com/api/docs/guides/evals ; https://developers.openai.com/api/docs/guides/graders ; https://developers.openai.com/api/reference/resources/evals/methods/create ; https://developers.openai.com/api/reference/python/resources/evals/subresources/runs/methods/create . Aviso: la plataforma de Evals queda de solo lectura el 2026-10-31 y se apaga el 2026-11-30.",
+  "POST /v1/evals": {
+    "name": "Soporte de Tienda Ejemplo: responde sin inventar políticas",
+    "metadata": {
+      "eval_id": "soporte-sin-politicas-inventadas",
+      "version": "1"
+    },
+    "data_source_config": {
+      "type": "custom",
+      "item_schema": {
+        "type": "object",
+        "properties": {
+          "pregunta": {
+            "type": "string"
+          },
+          "frase_clave": {
+            "type": "string"
+          },
+          "caso": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "pregunta",
+          "frase_clave",
+          "caso"
+        ]
+      },
+      "include_sample_schema": true
+    },
+    "testing_criteria": [
+      {
+        "type": "label_model",
+        "name": "no_inventa_politicas",
+        "model": "gpt-4.1-mini",
+        "input": [
+          {
+            "role": "developer",
+            "content": "Eres un juez. Política vigente: 1. Devoluciones: hasta 30 días naturales después de la compra, con ticket. 2. El envío de una devolución lo paga el cliente. 3. El reembolso va al mismo medio de pago en 5 a 10 días hábiles. No existe ninguna otra política. Si la política no cubre la pregunta, dilo y ofrece pasar con una persona. Clasifica la respuesta como 'cumple' si solo afirma políticas de esa lista y, cuando la pregunta no está cubierta, lo dice y ofrece pasar con una persona. Clasifícala como 'inventa' si promete algo que no está en la lista."
+          },
+          {
+            "role": "user",
+            "content": "Pregunta: {{ item.pregunta }}\nRespuesta: {{ sample.output_text }}"
+          }
+        ],
+        "labels": [
+          "cumple",
+          "inventa"
+        ],
+        "passing_labels": [
+          "cumple"
+        ]
+      },
+      {
+        "type": "string_check",
+        "name": "menciona_frase_clave",
+        "input": "{{ sample.output_text }}",
+        "operation": "ilike",
+        "reference": "{{ item.frase_clave }}"
+      }
+    ]
+  },
+  "POST /v1/evals/{eval_id}/runs": {
+    "name": "soporte-v1 con gpt-4.1-mini",
+    "data_source": {
+      "type": "responses",
+      "model": "gpt-4.1-mini",
+      "input_messages": {
+        "type": "template",
+        "template": [
+          {
+            "role": "developer",
+            "content": "Eres el asistente de soporte de Tienda Ejemplo. Responde solo con base en esta política: 1. Devoluciones: hasta 30 días naturales después de la compra, con ticket. 2. El envío de una devolución lo paga el cliente. 3. El reembolso va al mismo medio de pago en 5 a 10 días hábiles. No existe ninguna otra política. Si la política no cubre la pregunta, dilo y ofrece pasar con una persona."
+          },
+          {
+            "role": "user",
+            "content": "{{ item.pregunta }}"
+          }
+        ]
+      },
+      "source": {
+        "type": "file_content",
+        "content": [
+          {
+            "item": {
+              "pregunta": "Compré unos zapatos hace 20 días y no me quedaron. ¿Puedo devolverlos?",
+              "frase_clave": "30 días",
+              "caso": "cubierto"
+            }
+          },
+          {
+            "item": {
+              "pregunta": "Vi el mismo producto más barato en otra tienda. ¿Me igualan el precio?",
+              "frase_clave": "persona",
+              "caso": "no-cubierto"
+            }
+          },
+          {
+            "item": {
+              "pregunta": "Ya pasaron 45 días desde la compra. ¿Todavía puedo devolverlo?",
+              "frase_clave": "30 días",
+              "caso": "cubierto"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,429 @@
+{
+  "generated": "2026-10-02",
+  "generator": "scripts/generate_content.py — regenerate, never hand-edit",
+  "version": "1.0.0",
+  "openaiNote": {
+    "es": "La plataforma OpenAI Evals queda en solo lectura el 2026-10-31 y se apaga el 2026-11-30; OpenAI recomienda migrar a promptfoo. El repo abierto openai/evals sigue disponible.",
+    "en": "The OpenAI Evals platform goes read-only on 2026-10-31 and shuts down on 2026-11-30; OpenAI recommends migrating to promptfoo. The open-source openai/evals repo remains available.",
+    "sources": [
+      "F-C2-03",
+      "F-C5-08"
+    ]
+  },
+  "tools": [
+    {
+      "id": "inspect",
+      "name": "Inspect AI",
+      "format": "code",
+      "source": "F-C2-01",
+      "fixture": "inspect_task.py",
+      "deprecatedOn": null,
+      "detection": {
+        "strong": [
+          "from inspect_ai import Task, task",
+          "@task",
+          "Task(dataset=…, solver=…, scorer=…)",
+          "log JSON con version, status, eval, plan, results, stats, samples"
+        ],
+        "weak": [
+          "imports de inspect_ai.scorer"
+        ]
+      },
+      "fields": {
+        "purpose": null,
+        "cases": "dataset, Sample.input",
+        "system": "solver + model",
+        "output": "state.output.completion, mensajes",
+        "criteria": "target como {criterion}, instructions",
+        "grader": "scorer",
+        "verdict": "C / I / P / N o número",
+        "reference": "target",
+        "threshold": null,
+        "aggregation": "metrics",
+        "metadata": "version, metadata, tags",
+        "validation": null,
+        "trials": "epochs",
+        "environment": "sandbox, setup"
+      },
+      "notes": {
+        "es": "El log guarda solver y scorer: es mejor fuente que el .py. El .eval es binario (inspect log dump).",
+        "en": "The log stores solver and scorer: a better source than the .py. The .eval file is binary (inspect log dump)."
+      }
+    },
+    {
+      "id": "promptfoo",
+      "name": "promptfoo",
+      "format": "declarative",
+      "source": "F-C2-02",
+      "fixture": "promptfoo.yaml",
+      "deprecatedOn": null,
+      "detection": {
+        "strong": [
+          "$schema=https://promptfoo.dev/config-schema.json",
+          "claves prompts + (providers o targets)",
+          "assert con type",
+          "resultados: evalId + results + config + shareableUrl"
+        ],
+        "weak": [
+          "defaultTest",
+          "evaluateOptions",
+          "redteam"
+        ]
+      },
+      "fields": {
+        "purpose": "description",
+        "cases": "tests[].vars",
+        "system": "prompts × providers",
+        "output": "salida del proveedor",
+        "criteria": "assert[].value, rubricPrompt",
+        "grader": "assert[].type",
+        "verdict": "0–1, pass, reason",
+        "reference": "assert[].value",
+        "threshold": "threshold",
+        "aggregation": "weight, metric, derivedMetrics",
+        "metadata": "metadata, tags",
+        "validation": "promptfoo validate config (solo esquema)",
+        "trials": "evaluateOptions.repeat",
+        "environment": null
+      },
+      "notes": {
+        "es": "Su esquema acepta claves desconocidas: validar contra él no detecta un campo mal escrito. targets (plural) es el sistema, no la referencia.",
+        "en": "Its schema accepts unknown keys: validating against it does not catch a misspelled field. targets (plural) is the system, not the reference."
+      }
+    },
+    {
+      "id": "openai-evals-registry",
+      "name": "OpenAI Evals (registro abierto)",
+      "format": "declarative",
+      "source": "F-C2-03",
+      "fixture": "openai-evals.yaml",
+      "deprecatedOn": null,
+      "detection": {
+        "strong": [
+          "id: <nombre>.<split>.<versión>",
+          "class: evals.elsuite…",
+          "args.samples_jsonl",
+          "JSONL con input e ideal"
+        ],
+        "weak": [
+          "modelgraded_spec"
+        ]
+      },
+      "fields": {
+        "purpose": "description / name",
+        "cases": "input",
+        "system": "CLI oaieval",
+        "output": "completion",
+        "criteria": "criteria (modelgraded)",
+        "grader": "class",
+        "verdict": "choice_scores",
+        "reference": "ideal",
+        "threshold": null,
+        "aggregation": "metrics",
+        "metadata": "<eval>.<split>.<version>",
+        "validation": "metaeval → metascore",
+        "trials": null,
+        "environment": null
+      },
+      "notes": null
+    },
+    {
+      "id": "openai-evals-api",
+      "name": "OpenAI Evals API",
+      "format": "declarative",
+      "source": "F-C2-03",
+      "fixture": "openai-evals-api.json",
+      "deprecatedOn": "2026-11-30",
+      "detection": {
+        "strong": [
+          "data_source_config + testing_criteria",
+          "plantillas {{ item.… }} y {{ sample.… }}",
+          "JSONL con filas {\"item\": {…}}"
+        ],
+        "weak": [
+          "\"object\": \"eval\"",
+          "ids eval_… y evalrun_…"
+        ]
+      },
+      "fields": {
+        "purpose": "name",
+        "cases": "item_schema + item",
+        "system": "data_source.model + input_messages",
+        "output": "sample.output_text",
+        "criteria": "input del grader",
+        "grader": "testing_criteria[].type",
+        "verdict": "labels, passing_labels",
+        "reference": "reference (en item)",
+        "threshold": "pass_threshold, passing_labels",
+        "aggregation": "result_counts",
+        "metadata": "metadata",
+        "validation": null,
+        "trials": null,
+        "environment": null
+      },
+      "notes": null
+    },
+    {
+      "id": "lm-eval",
+      "name": "lm-evaluation-harness",
+      "format": "declarative",
+      "source": "F-C2-04",
+      "fixture": "lm-eval-task.yaml",
+      "deprecatedOn": null,
+      "detection": {
+        "strong": [
+          "task: + dataset_path + (doc_to_text u output_type)",
+          "etiqueta !function",
+          "include:"
+        ],
+        "weak": [
+          "metric_list",
+          "filter_list"
+        ]
+      },
+      "fields": {
+        "purpose": null,
+        "cases": "dataset_path, doc_to_text",
+        "system": "CLI --model",
+        "output": "resps, filtered_resps",
+        "criteria": null,
+        "grader": "metric_list[].metric",
+        "verdict": "valor de la métrica",
+        "reference": "doc_to_target",
+        "threshold": null,
+        "aggregation": "aggregation",
+        "metadata": "metadata.version",
+        "validation": null,
+        "trials": "repeats",
+        "environment": null
+      },
+      "notes": {
+        "es": "El lector YAML debe tolerar !function. description aquí es un prefijo del prompt, no el propósito.",
+        "en": "The YAML reader must tolerate !function. description here is a prompt prefix, not the purpose."
+      }
+    },
+    {
+      "id": "deepeval",
+      "name": "DeepEval",
+      "format": "code",
+      "source": "F-C2-05",
+      "fixture": "deepeval_test.py",
+      "deprecatedOn": null,
+      "detection": {
+        "strong": [
+          "from deepeval",
+          "LLMTestCase",
+          "assert_test",
+          "GEval"
+        ],
+        "weak": [
+          "Golden",
+          "test_run_<fecha>.json en .deepeval/"
+        ]
+      },
+      "fields": {
+        "purpose": null,
+        "cases": "Golden.input, LLMTestCase.input",
+        "system": "código propio",
+        "output": "actual_output, tools_called",
+        "criteria": "criteria, evaluation_steps, rubric, expectations (must, must_not)",
+        "grader": "métrica (GEval…)",
+        "verdict": "0–1 + reason",
+        "reference": "expected_output",
+        "threshold": "threshold, strict_mode",
+        "aggregation": "test run",
+        "metadata": "hyperparameters, additional_metadata",
+        "validation": null,
+        "trials": null,
+        "environment": null
+      },
+      "notes": null
+    },
+    {
+      "id": "ragas",
+      "name": "Ragas",
+      "format": "code",
+      "source": "F-C2-06",
+      "fixture": null,
+      "deprecatedOn": null,
+      "detection": {
+        "strong": [
+          "from ragas import",
+          "SingleTurnSample",
+          "@experiment",
+          "@discrete_metric"
+        ],
+        "weak": [
+          "CSV <fecha>-<nombre>.csv en experiments/"
+        ]
+      },
+      "fields": {
+        "purpose": null,
+        "cases": "user_input",
+        "system": "@experiment",
+        "output": "response",
+        "criteria": "rubrics",
+        "grader": "métrica",
+        "verdict": "allowed_values, MetricResult",
+        "reference": "reference",
+        "threshold": null,
+        "aggregation": "media / suma / moda",
+        "metadata": "claves libres",
+        "validation": "acuerdo ≥ 80 % (guía)",
+        "trials": null,
+        "environment": null
+      },
+      "notes": {
+        "es": "Leer rubrics (plural); rubric en singular se pierde sin error.",
+        "en": "Read rubrics (plural); singular rubric is silently dropped."
+      }
+    },
+    {
+      "id": "langsmith",
+      "name": "LangSmith",
+      "format": "code",
+      "source": "F-C2-07",
+      "fixture": null,
+      "deprecatedOn": null,
+      "detection": {
+        "strong": [
+          "from langsmith import",
+          "evaluate(",
+          "evaluador con reference_outputs"
+        ],
+        "weak": [
+          "datos en el servidor (export CSV)"
+        ]
+      },
+      "fields": {
+        "purpose": "description (experimento)",
+        "cases": "ejemplo inputs",
+        "system": "target",
+        "output": "run outputs + traza",
+        "criteria": "instrucción del juez, assertions",
+        "grader": "evaluator",
+        "verdict": "score / value + comment",
+        "reference": "reference_outputs",
+        "threshold": null,
+        "aggregation": "resumen del experimento",
+        "metadata": "metadata, versión de dataset",
+        "validation": null,
+        "trials": "num_repetitions",
+        "environment": null
+      },
+      "notes": null
+    },
+    {
+      "id": "braintrust",
+      "name": "Braintrust",
+      "format": "code",
+      "source": "F-C2-08",
+      "fixture": "braintrust_eval.py",
+      "deprecatedOn": null,
+      "detection": {
+        "strong": [
+          "from braintrust import Eval",
+          "Eval( con data, task, scores",
+          "from autoevals import"
+        ],
+        "weak": [
+          "comando bt eval"
+        ]
+      },
+      "fields": {
+        "purpose": "proyecto, experiment_name",
+        "cases": "data[].input",
+        "system": "task",
+        "output": "output + traza",
+        "criteria": "prompt_template",
+        "grader": "scores",
+        "verdict": "0–1, choice_scores, null (Skip)",
+        "reference": "expected",
+        "threshold": "metadata.__pass_threshold (scorer)",
+        "aggregation": "puntajes agregados",
+        "metadata": "metadata, parameters",
+        "validation": "panel Run del scorer",
+        "trials": "trial_count",
+        "environment": null
+      },
+      "notes": {
+        "es": "task aquí es el sistema bajo prueba, no la eval entera.",
+        "en": "task here is the system under test, not the whole eval."
+      }
+    },
+    {
+      "id": "phoenix",
+      "name": "Arize Phoenix",
+      "format": "code",
+      "source": "F-C2-09",
+      "fixture": null,
+      "deprecatedOn": null,
+      "detection": {
+        "strong": [
+          "from phoenix.evals import",
+          "ClassificationEvaluator",
+          "run_experiment("
+        ],
+        "weak": [
+          "@arizeai/phoenix-evals",
+          "datasets JSONL/CSV"
+        ]
+      },
+      "fields": {
+        "purpose": "experiment_name",
+        "cases": "ejemplo input",
+        "system": "task",
+        "output": "salida de task + spans",
+        "criteria": "prompt_template",
+        "grader": "ClassificationEvaluator…",
+        "verdict": "label, score, explanation",
+        "reference": "output del ejemplo",
+        "threshold": null,
+        "aggregation": "vista Experiments",
+        "metadata": "dataset versionado",
+        "validation": null,
+        "trials": "repetitions",
+        "environment": null
+      },
+      "notes": null
+    },
+    {
+      "id": "elevenlabs",
+      "name": "ElevenLabs agent tests",
+      "format": "declarative",
+      "source": "F-C2-10",
+      "fixture": "elevenlabs-test.json",
+      "deprecatedOn": null,
+      "detection": {
+        "strong": [
+          "type ∈ {llm, tool, simulation}",
+          "chat_history, success_condition, simulation_scenario o tool_call_parameters",
+          "resultados con test_runs[].condition_result.result"
+        ],
+        "weak": [
+          "parent_folder_id"
+        ]
+      },
+      "fields": {
+        "purpose": "name",
+        "cases": "chat_history, simulation_scenario",
+        "system": "agente (agent_id)",
+        "output": "agent_responses",
+        "criteria": "success_condition (llm), success_conditions (simulation)",
+        "grader": "type, eval.type",
+        "verdict": "success / failure / unknown",
+        "reference": "success_examples, failure_examples",
+        "threshold": "semáforo 100 / 80 % (interfaz)",
+        "aggregation": "result_groups, buckets",
+        "metadata": "parent_folder_id, from_conversation_metadata (sin versión de la prueba)",
+        "validation": null,
+        "trials": "repeat_count",
+        "environment": "tool_mock_config, simulated_user_model"
+      },
+      "notes": {
+        "es": "repeat_count: la guía dice 2–20 y la API acepta 1–50; seguir la API.",
+        "en": "repeat_count: the guide says 2–20 and the API accepts 1–50; follow the API."
+      }
+    }
+  ]
+}

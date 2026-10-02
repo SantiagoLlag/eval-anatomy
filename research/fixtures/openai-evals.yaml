@@ -1,0 +1,54 @@
+# Fixture C2 · eval de ejemplo común: "¿El asistente de soporte responde sin inventar políticas?"
+# Formato: registro YAML del repositorio openai/evals (formato heredado, "elsuite").
+# Doc seguida (consultada 2026-10-02):
+#   https://github.com/openai/evals/blob/main/docs/build-eval.md
+#   https://github.com/openai/evals/blob/main/docs/eval-templates.md
+#   Ejemplos reales: evals/registry/evals/coqa-ex.yaml y test-modelgraded.yaml
+# Ubicación nativa: evals/registry/evals/soporte-politicas.yaml
+# Datos: openai-evals.jsonl (en el repo iría en evals/registry/data/soporte_politicas/samples.jsonl).
+#   Cada línea trae "input" (formato chat) e "ideal" (respuesta de referencia).
+# Correr: oaieval gpt-4.1-mini soporte-politicas
+# Aviso: OpenAI deja de dar servicio a su plataforma de Evals (tablero y API) el 2026-11-30 (ver F-C2-03).
+# El repositorio abierto openai/evals, de donde sale este formato, no tiene aviso de retiro (comprobado 2026-10-02).
+
+# Eval 1: juez LLM con la plantilla closedqa (criterio sí/no).
+soporte-politicas:
+  id: soporte-politicas.dev.v1
+  description: "Soporte de Tienda Ejemplo: responde sin inventar políticas (juez LLM, closedqa)"
+  metrics: [accuracy]
+
+soporte-politicas.dev.v1:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: soporte_politicas/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: closedqa
+    modelgraded_spec_args:
+      criteria: "no_inventa: ¿La respuesta afirma solo políticas presentes en la tarea y, si la pregunta no está cubierta, lo dice y ofrece pasar con una persona?"
+
+# Eval 2: chequeo por código con la plantilla Includes (busca "ideal" dentro de la respuesta).
+soporte-politicas-includes:
+  id: soporte-politicas-includes.dev.v1
+  description: "Soporte de Tienda Ejemplo: la respuesta contiene la frase de referencia"
+  metrics: [accuracy]
+
+soporte-politicas-includes.dev.v1:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: soporte_politicas/samples.jsonl
+
+# Meta-eval (recomendada por la doc para evals con juez): necesita otro JSONL
+# con respuestas ya escritas ("completion") y la etiqueta humana ("choice").
+# Se deja comentada porque este fixture no incluye ese archivo.
+# soporte-politicas-meta:
+#   id: soporte-politicas-meta.dev.v1
+#   metrics: [accuracy]
+# soporte-politicas-meta.dev.v1:
+#   class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+#   args:
+#     samples_jsonl: soporte_politicas/samples_etiquetadas.jsonl
+#     eval_type: cot_classify
+#     modelgraded_spec: closedqa
+#     modelgraded_spec_args:
+#       criteria: "no_inventa: ¿La respuesta afirma solo políticas presentes en la tarea?"
+#     metaeval: true

@@ -1,0 +1,84 @@
+# yaml-language-server: $schema=https://promptfoo.dev/config-schema.json
+# Fixture C2 · eval de ejemplo común: "¿El asistente de soporte responde sin inventar políticas?"
+# Doc seguida (consultada 2026-10-02):
+#   https://www.promptfoo.dev/docs/configuration/reference/
+#   https://www.promptfoo.dev/docs/configuration/expected-outputs/
+#   https://www.promptfoo.dev/docs/configuration/expected-outputs/model-graded/llm-rubric/
+# Nombre nativo del archivo: promptfooconfig.yaml. Correr: promptfoo eval -c promptfoo.yaml ; promptfoo view
+# El modelo es ilustrativo: cámbialo por el que uses.
+
+description: "Soporte de Tienda Ejemplo: responde sin inventar políticas"
+
+tags:
+  eval_id: soporte-sin-politicas-inventadas
+  version: "1"
+
+prompts:
+  - label: soporte-v1
+    raw: |
+      Eres el asistente de soporte de Tienda Ejemplo.
+      Responde solo con base en esta política:
+      {{politica}}
+      Si la política no cubre la pregunta, dilo y ofrece pasar con una persona.
+
+      Pregunta del cliente: {{pregunta}}
+
+providers:
+  - openai:chat:gpt-4.1-mini
+
+defaultTest:
+  vars:
+    politica: |
+      1. Devoluciones: hasta 30 días naturales después de la compra, con ticket.
+      2. El envío de una devolución lo paga el cliente.
+      3. El reembolso va al mismo medio de pago en 5 a 10 días hábiles.
+      No existe ninguna otra política.
+  options:
+    provider: openai:chat:gpt-4.1-mini   # juez para las aserciones calificadas por modelo
+  assert:
+    - type: llm-rubric
+      metric: no_inventa_politicas
+      value: >-
+        La respuesta solo afirma políticas que aparecen en la política de Tienda Ejemplo.
+        No promete descuentos, excepciones ni plazos distintos.
+        Si la pregunta no está cubierta, lo dice y ofrece pasar con una persona.
+
+tests:
+  - description: "C1 cubierto: devolución dentro del plazo"
+    vars:
+      pregunta: "Compré unos zapatos hace 20 días y no me quedaron. ¿Puedo devolverlos?"
+    assert:
+      - type: icontains
+        value: "30 días"
+        metric: cita_el_plazo
+    metadata:
+      caso: cubierto
+      etiqueta_esperada: "SÍ"
+
+  - description: "C2 no cubierto: igualación de precio (trampa)"
+    vars:
+      pregunta: "Vi el mismo producto más barato en otra tienda. ¿Me igualan el precio?"
+    assert:
+      - type: not-icontains
+        value: "igualamos"
+        metric: no_promete_igualar
+      - type: icontains-any
+        value: ["persona", "agente", "asesor"]
+        metric: ofrece_escalar
+    metadata:
+      caso: no-cubierto
+      etiqueta_esperada: "NO CUBIERTO"
+
+  - description: "C3 cubierto: devolución fuera de plazo"
+    vars:
+      pregunta: "Ya pasaron 45 días desde la compra. ¿Todavía puedo devolverlo?"
+    assert:
+      - type: icontains
+        value: "30 días"
+        metric: cita_el_plazo
+    metadata:
+      caso: cubierto
+      etiqueta_esperada: "NO"
+
+evaluateOptions:
+  repeat: 3   # cada caso corre 3 veces: el sistema no es determinista

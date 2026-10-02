@@ -1,0 +1,775 @@
+{
+  "generated": "2026-10-02",
+  "generator": "scripts/generate_content.py — regenerate, never hand-edit",
+  "version": "1.0.0",
+  "axes": [
+    {
+      "id": "origin",
+      "filter": false,
+      "multiple": false,
+      "name": {
+        "es": "Origen",
+        "en": "Origin"
+      },
+      "note": null,
+      "values": [
+        {
+          "id": "public-benchmark",
+          "label": {
+            "es": "Benchmark público",
+            "en": "Public benchmark"
+          },
+          "definition": {
+            "es": "Conjunto abierto para comparar modelos.",
+            "en": "Open set for comparing models."
+          },
+          "note": null
+        },
+        {
+          "id": "product-eval",
+          "label": {
+            "es": "Eval de producto",
+            "en": "Product eval"
+          },
+          "definition": {
+            "es": "Tareas y criterios propios de una aplicación.",
+            "en": "Tasks and criteria specific to one application."
+          },
+          "note": null
+        }
+      ],
+      "sources": [
+        "F-C3-04",
+        "F-C3-07",
+        "F-C3-02",
+        "F-C3-01"
+      ]
+    },
+    {
+      "id": "purpose",
+      "filter": true,
+      "multiple": false,
+      "name": {
+        "es": "Propósito",
+        "en": "Purpose"
+      },
+      "note": null,
+      "values": [
+        {
+          "id": "capability",
+          "label": {
+            "es": "Capacidad",
+            "en": "Capability"
+          },
+          "definition": {
+            "es": "Mide lo que aún falla; empieza baja y se lee la tendencia.",
+            "en": "Measures what still fails; starts low and you read the trend."
+          },
+          "note": null
+        },
+        {
+          "id": "regression",
+          "label": {
+            "es": "Regresión",
+            "en": "Regression"
+          },
+          "definition": {
+            "es": "Vigila lo que ya funcionaba; se espera cerca de 100 %.",
+            "en": "Guards what already worked; near 100% is expected."
+          },
+          "note": null
+        },
+        {
+          "id": "comparison",
+          "label": {
+            "es": "Comparación",
+            "en": "Comparison"
+          },
+          "definition": {
+            "es": "Ordena versiones o modelos.",
+            "en": "Ranks versions or models."
+          },
+          "note": null
+        },
+        {
+          "id": "risk-threshold",
+          "label": {
+            "es": "Umbral de riesgo",
+            "en": "Risk threshold"
+          },
+          "definition": {
+            "es": "Decide si se cruzó un nivel peligroso.",
+            "en": "Decides whether a dangerous level was crossed."
+          },
+          "note": null
+        }
+      ],
+      "sources": [
+        "F-C3-01",
+        "F-C3-05",
+        "F-C3-04",
+        "F-C3-10"
+      ]
+    },
+    {
+      "id": "moment",
+      "filter": true,
+      "multiple": false,
+      "name": {
+        "es": "Momento",
+        "en": "Moment"
+      },
+      "note": null,
+      "values": [
+        {
+          "id": "offline",
+          "label": {
+            "es": "Antes de lanzar (offline)",
+            "en": "Offline"
+          },
+          "definition": {
+            "es": "Con conjunto fijo, antes de lanzar.",
+            "en": "With a fixed set, before launch."
+          },
+          "note": null
+        },
+        {
+          "id": "online",
+          "label": {
+            "es": "En producción (online)",
+            "en": "Online"
+          },
+          "definition": {
+            "es": "Con tráfico real: monitoreo, guardarraíl o prueba A/B.",
+            "en": "With real traffic: monitoring, guardrail or A/B test."
+          },
+          "note": null
+        },
+        {
+          "id": "backtesting",
+          "label": {
+            "es": "Con datos históricos",
+            "en": "Backtesting"
+          },
+          "definition": {
+            "es": "Offline con datos pasados de producción.",
+            "en": "Offline with past production data."
+          },
+          "note": null
+        }
+      ],
+      "sources": [
+        "F-C3-05",
+        "F-C3-06",
+        "F-C3-01",
+        "F-C3-03"
+      ]
+    },
+    {
+      "id": "interaction",
+      "filter": false,
+      "multiple": false,
+      "name": {
+        "es": "Interacción",
+        "en": "Interaction"
+      },
+      "note": null,
+      "values": [
+        {
+          "id": "static",
+          "label": {
+            "es": "Estática",
+            "en": "Static"
+          },
+          "definition": {
+            "es": "Entradas fijas que no reaccionan.",
+            "en": "Fixed inputs that do not react."
+          },
+          "note": null
+        },
+        {
+          "id": "dynamic",
+          "label": {
+            "es": "Dinámica",
+            "en": "Dynamic"
+          },
+          "definition": {
+            "es": "Un entorno o usuario simulado responde a cada acción.",
+            "en": "An environment or simulated user reacts to each action."
+          },
+          "note": null
+        }
+      ],
+      "sources": [
+        "F-C3-08",
+        "F-C3-01"
+      ]
+    },
+    {
+      "id": "structure",
+      "filter": true,
+      "multiple": false,
+      "name": {
+        "es": "Estructura y unidad",
+        "en": "Structure and unit"
+      },
+      "note": {
+        "es": "Une los ejes 5 (estructura) y 6 (unidad calificada) del mapa C3.",
+        "en": "Merges axes 5 (structure) and 6 (graded unit) of map C3."
+      },
+      "values": [
+        {
+          "id": "single-turn",
+          "label": {
+            "es": "Un turno",
+            "en": "Single turn"
+          },
+          "definition": {
+            "es": "Pregunta, respuesta y calificación.",
+            "en": "Question, answer and grade."
+          },
+          "note": null
+        },
+        {
+          "id": "multi-turn",
+          "label": {
+            "es": "Multi-turno",
+            "en": "Multi-turn"
+          },
+          "definition": {
+            "es": "Se califica una conversación.",
+            "en": "A conversation is graded."
+          },
+          "note": null
+        },
+        {
+          "id": "agent-outcome",
+          "label": {
+            "es": "Agente: resultado",
+            "en": "Agent: outcome"
+          },
+          "definition": {
+            "es": "Se califica el estado final del entorno.",
+            "en": "The final environment state is graded."
+          },
+          "note": null
+        },
+        {
+          "id": "agent-trajectory",
+          "label": {
+            "es": "Agente: trayectoria",
+            "en": "Agent: trajectory"
+          },
+          "definition": {
+            "es": "Se califican los pasos que siguió.",
+            "en": "The steps taken are graded."
+          },
+          "note": null
+        },
+        {
+          "id": "component",
+          "label": {
+            "es": "Componente",
+            "en": "Component"
+          },
+          "definition": {
+            "es": "Se califica una pieza aislada (p. ej., recuperación de documentos).",
+            "en": "An isolated piece is graded (e.g., document retrieval)."
+          },
+          "note": null
+        }
+      ],
+      "sources": [
+        "F-C3-01",
+        "F-C3-05",
+        "F-C3-08",
+        "F-C3-09",
+        "F-C3-02"
+      ]
+    },
+    {
+      "id": "grader",
+      "filter": true,
+      "multiple": true,
+      "name": {
+        "es": "Calificador",
+        "en": "Grader"
+      },
+      "note": null,
+      "values": [
+        {
+          "id": "code",
+          "label": {
+            "es": "Código",
+            "en": "Code"
+          },
+          "definition": {
+            "es": "Regla determinista: igualdad, regex, esquema, función.",
+            "en": "Deterministic rule: equality, regex, schema, function."
+          },
+          "note": null
+        },
+        {
+          "id": "similarity",
+          "label": {
+            "es": "Similitud",
+            "en": "Similarity"
+          },
+          "definition": {
+            "es": "Parecido con una referencia (ROUGE, BLEU, vectores).",
+            "en": "Closeness to a reference (ROUGE, BLEU, embeddings)."
+          },
+          "note": null
+        },
+        {
+          "id": "llm-judge",
+          "label": {
+            "es": "Juez LLM",
+            "en": "LLM judge"
+          },
+          "definition": {
+            "es": "Modelo con rúbrica.",
+            "en": "Model with a rubric."
+          },
+          "note": null
+        },
+        {
+          "id": "human",
+          "label": {
+            "es": "Humano",
+            "en": "Human"
+          },
+          "definition": {
+            "es": "Experto o multitud con guía.",
+            "en": "Expert or crowd with guidelines."
+          },
+          "note": null
+        },
+        {
+          "id": "user-signal",
+          "label": {
+            "es": "Señal de usuarios",
+            "en": "User signal"
+          },
+          "definition": {
+            "es": "Conducta medida en producción.",
+            "en": "Behavior measured in production."
+          },
+          "note": null
+        }
+      ],
+      "sources": [
+        "F-C3-01",
+        "F-C3-05",
+        "F-C3-07",
+        "F-C3-08",
+        "F-C3-06",
+        "F-C5-08",
+        "F-C5-10"
+      ]
+    },
+    {
+      "id": "judgment",
+      "filter": true,
+      "multiple": false,
+      "name": {
+        "es": "Formato del juicio",
+        "en": "Judgment format"
+      },
+      "note": {
+        "es": "Une los ejes 8 (comparación) y 9 (referencia) del mapa C3.",
+        "en": "Merges axes 8 (comparison) and 9 (reference) of map C3."
+      },
+      "values": [
+        {
+          "id": "pointwise",
+          "label": {
+            "es": "Puntual sin referencia",
+            "en": "Pointwise, reference-free"
+          },
+          "definition": {
+            "es": "Juzga una salida sola con reglas o criterios.",
+            "en": "Judges one output alone with rules or criteria."
+          },
+          "note": null
+        },
+        {
+          "id": "pointwise-reference",
+          "label": {
+            "es": "Puntual con referencia",
+            "en": "Pointwise, with reference"
+          },
+          "definition": {
+            "es": "Compara una salida contra una respuesta de oro.",
+            "en": "Compares one output to a golden answer."
+          },
+          "note": null
+        },
+        {
+          "id": "pairwise",
+          "label": {
+            "es": "Por pares",
+            "en": "Pairwise"
+          },
+          "definition": {
+            "es": "Elige entre dos salidas o declara empate.",
+            "en": "Picks between two outputs or declares a tie."
+          },
+          "note": null
+        }
+      ],
+      "sources": [
+        "F-C3-03",
+        "F-C3-05",
+        "F-C3-04"
+      ]
+    },
+    {
+      "id": "inputs-origin",
+      "filter": false,
+      "multiple": true,
+      "name": {
+        "es": "Origen de las entradas",
+        "en": "Input origin"
+      },
+      "note": null,
+      "values": [
+        {
+          "id": "real",
+          "label": {
+            "es": "Reales",
+            "en": "Real"
+          },
+          "definition": {
+            "es": "Tráfico o trazas de usuarios.",
+            "en": "User traffic or traces."
+          },
+          "note": null
+        },
+        {
+          "id": "synthetic",
+          "label": {
+            "es": "Sintéticas",
+            "en": "Synthetic"
+          },
+          "definition": {
+            "es": "Generadas, idealmente por dimensiones.",
+            "en": "Generated, ideally along dimensions."
+          },
+          "note": null
+        },
+        {
+          "id": "curated",
+          "label": {
+            "es": "Curadas por expertos",
+            "en": "Expert-curated"
+          },
+          "definition": {
+            "es": "Escritas o etiquetadas por expertos.",
+            "en": "Written or labeled by experts."
+          },
+          "note": null
+        },
+        {
+          "id": "adversarial",
+          "label": {
+            "es": "Adversariales",
+            "en": "Adversarial"
+          },
+          "definition": {
+            "es": "Diseñadas para hacer fallar.",
+            "en": "Designed to cause failure."
+          },
+          "note": null
+        }
+      ],
+      "sources": [
+        "F-C3-02",
+        "F-C3-05",
+        "F-C3-08",
+        "F-C3-10",
+        "F-C3-07"
+      ]
+    },
+    {
+      "id": "dimension",
+      "filter": true,
+      "multiple": true,
+      "name": {
+        "es": "Dimensión medida",
+        "en": "Measured dimension"
+      },
+      "note": null,
+      "values": [
+        {
+          "id": "correctness",
+          "label": {
+            "es": "Corrección",
+            "en": "Correctness"
+          },
+          "definition": {
+            "es": "Resuelve la tarea.",
+            "en": "Solves the task."
+          },
+          "note": null
+        },
+        {
+          "id": "text-quality",
+          "label": {
+            "es": "Calidad del texto",
+            "en": "Text quality"
+          },
+          "definition": {
+            "es": "Relevancia, fidelidad, fluidez, tono.",
+            "en": "Relevance, faithfulness, fluency, tone."
+          },
+          "note": null
+        },
+        {
+          "id": "reliability",
+          "label": {
+            "es": "Confiabilidad",
+            "en": "Reliability"
+          },
+          "definition": {
+            "es": "Consistencia y robustez.",
+            "en": "Consistency and robustness."
+          },
+          "note": null
+        },
+        {
+          "id": "safety",
+          "label": {
+            "es": "Seguridad y cumplimiento",
+            "en": "Safety and compliance"
+          },
+          "definition": {
+            "es": "Toxicidad, sesgo, privacidad, políticas.",
+            "en": "Toxicity, bias, privacy, policies."
+          },
+          "note": null
+        },
+        {
+          "id": "dangerous-capability",
+          "label": {
+            "es": "Capacidad peligrosa",
+            "en": "Dangerous capability"
+          },
+          "definition": {
+            "es": "Bio, ciber, automejora.",
+            "en": "Bio, cyber, self-improvement."
+          },
+          "note": null
+        },
+        {
+          "id": "cost-latency",
+          "label": {
+            "es": "Costo y latencia",
+            "en": "Cost and latency"
+          },
+          "definition": {
+            "es": "Tokens y tiempo.",
+            "en": "Tokens and time."
+          },
+          "note": null
+        },
+        {
+          "id": "user-experience",
+          "label": {
+            "es": "Experiencia de usuario",
+            "en": "User experience"
+          },
+          "definition": {
+            "es": "Interacción y retención.",
+            "en": "Interaction and retention."
+          },
+          "note": null
+        }
+      ],
+      "sources": [
+        "F-C3-08",
+        "F-C3-07",
+        "F-C3-06",
+        "F-C3-10",
+        "F-C3-09"
+      ]
+    },
+    {
+      "id": "system-type",
+      "filter": true,
+      "multiple": true,
+      "name": {
+        "es": "Tipo de sistema",
+        "en": "System type"
+      },
+      "note": null,
+      "values": [
+        {
+          "id": "chat",
+          "label": {
+            "es": "Chat",
+            "en": "Chat"
+          },
+          "definition": null,
+          "note": null
+        },
+        {
+          "id": "rag",
+          "label": {
+            "es": "RAG (búsqueda + generación)",
+            "en": "RAG"
+          },
+          "definition": null,
+          "note": null
+        },
+        {
+          "id": "coding-agent",
+          "label": {
+            "es": "Agente de código",
+            "en": "Coding agent"
+          },
+          "definition": null,
+          "note": null
+        },
+        {
+          "id": "conversational-agent",
+          "label": {
+            "es": "Agente conversacional",
+            "en": "Conversational agent"
+          },
+          "definition": null,
+          "note": null
+        },
+        {
+          "id": "research-agent",
+          "label": {
+            "es": "Agente de investigación",
+            "en": "Research agent"
+          },
+          "definition": null,
+          "note": null
+        },
+        {
+          "id": "computer-use-agent",
+          "label": {
+            "es": "Agente de uso de computadora",
+            "en": "Computer-use agent"
+          },
+          "definition": null,
+          "note": null
+        },
+        {
+          "id": "summarization",
+          "label": {
+            "es": "Resumen",
+            "en": "Summarization"
+          },
+          "definition": null,
+          "note": null
+        },
+        {
+          "id": "classification",
+          "label": {
+            "es": "Clasificación",
+            "en": "Classification"
+          },
+          "definition": null,
+          "note": null
+        },
+        {
+          "id": "document-generation",
+          "label": {
+            "es": "Generación de documentos",
+            "en": "Document generation"
+          },
+          "definition": null,
+          "note": {
+            "es": "Valor agregado por este vault para evals de documentos (E05, E12); no viene de C3.",
+            "en": "Value added by this vault for document evals (E05, E12); not from C3."
+          }
+        }
+      ],
+      "sources": [
+        "F-C3-01",
+        "F-C3-05",
+        "F-C3-09"
+      ]
+    }
+  ],
+  "constraints": [
+    {
+      "si": {
+        "moment": "online"
+      },
+      "entonces": {
+        "judgment": [
+          "pointwise"
+        ],
+        "inputs-origin": [
+          "real"
+        ]
+      },
+      "fichas": [
+        "F-C3-05"
+      ]
+    },
+    {
+      "si": {
+        "structure": [
+          "agent-outcome",
+          "agent-trajectory"
+        ]
+      },
+      "requiere_partes": [
+        "environment",
+        "trials"
+      ],
+      "fichas": [
+        "F-C3-01",
+        "F-C3-05"
+      ]
+    },
+    {
+      "si": {
+        "judgment": "pairwise"
+      },
+      "requiere_partes": [
+        "baseline"
+      ],
+      "fichas": [
+        "F-C3-03",
+        "F-C3-05"
+      ]
+    },
+    {
+      "si": {
+        "judgment": "pointwise-reference"
+      },
+      "requiere_partes": [
+        "reference"
+      ],
+      "fichas": [
+        "F-C3-03",
+        "F-C3-05"
+      ]
+    },
+    {
+      "si": {
+        "purpose": "regression"
+      },
+      "umbral_tipico": "≈100 %",
+      "fichas": [
+        "F-C3-01"
+      ]
+    },
+    {
+      "si": {
+        "purpose": "capability"
+      },
+      "umbral_tipico": "sin umbral; se lee la tendencia",
+      "fichas": [
+        "F-C3-01"
+      ]
+    }
+  ]
+}

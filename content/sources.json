@@ -1,0 +1,877 @@
+{
+  "generated": "2026-10-02",
+  "generator": "scripts/generate_content.py — regenerate, never hand-edit",
+  "sources": {
+    "F-A2-10": {
+      "id": "F-A2-10",
+      "title": "ElevenLabs — referencia de API \"Get test invocation\" y \"Run tests on agent\": resultado success/failure/unknown con razón estructurada",
+      "authors": [
+        "ElevenLabs (referencia oficial de la API)"
+      ],
+      "url": "https://elevenlabs.io/docs/eleven-agents/api-reference/tests/test-invocations/get (respuesta) y https://elevenlabs.io/docs/api-reference/tests/run-tests (petición)",
+      "type": "doc-oficial",
+      "evidence": "guia-oficial",
+      "status": "CONFIRMADA",
+      "lens": "A2 docs de ElevenLabs frente al esquema real",
+      "verified": true
+    },
+    "F-A3-02": {
+      "id": "F-A3-02",
+      "title": "Success evaluation (Evaluación de éxito) — documentación oficial de ElevenLabs Agents",
+      "authors": [
+        "ElevenLabs (documentación oficial)"
+      ],
+      "url": "https://elevenlabs.io/docs/agents-platform/customization/agent-analysis/success-evaluation",
+      "type": "doc-oficial",
+      "evidence": "guia-oficial",
+      "status": "MATIZADA-corregida",
+      "lens": "A3 criterios de éxito y el estado \"no se sabe\"",
+      "verified": true
+    },
+    "F-C1-01": {
+      "id": "F-C1-01",
+      "title": "Demystifying evals for AI agents (Evals de agentes de IA sin misterio) — glosario de partes de una eval",
+      "authors": [
+        "Mikaela Grace, Jeremy Hadfield, Rodrigo Olivares y Jiri De Jonghe (Anthropic)"
+      ],
+      "url": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents",
+      "type": "blog",
+      "evidence": "opinion-experta",
+      "status": "MATIZADA-corregida",
+      "lens": "C1 definiciones y anatomía",
+      "verified": true
+    },
+    "F-C1-02": {
+      "id": "F-C1-02",
+      "title": "Define success criteria and build evaluations (Define criterios de éxito y construye evaluaciones)",
+      "authors": [
+        "Anthropic (documentación de Claude Platform; sin autor individual)"
+      ],
+      "url": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+      "type": "doc-oficial",
+      "evidence": "guia-oficial",
+      "status": "MATIZADA-corregida",
+      "lens": "C1 definiciones y anatomía",
+      "verified": true
+    },
+    "F-C1-03": {
+      "id": "F-C1-03",
+      "title": "Working with evals (Trabajar con evals) — guía de la Evals API de OpenAI",
+      "authors": [
+        "OpenAI (documentación para desarrolladores; sin autor individual)"
+      ],
+      "url": "https://developers.openai.com/api/docs/guides/evals",
+      "type": "doc-oficial",
+      "evidence": "guia-oficial",
+      "status": "CONFIRMADA",
+      "lens": "C1 definiciones y anatomía",
+      "verified": true
+    },
+    "F-C1-04": {
+      "id": "F-C1-04",
+      "title": "Evaluation best practices (Buenas prácticas de evaluación) — OpenAI",
+      "authors": [
+        "OpenAI (documentación para desarrolladores; sin autor individual)"
+      ],
+      "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+      "type": "doc-oficial",
+      "evidence": "guia-oficial",
+      "status": "CONFIRMADA",
+      "lens": "C1 definiciones y anatomía",
+      "verified": true
+    },
+    "F-C1-06": {
+      "id": "F-C1-06",
+      "title": "Observability in generative AI (Observabilidad en IA generativa) — Microsoft Foundry",
+      "authors": [
+        "Microsoft (Microsoft Learn; página firmada por lgayhardt)"
+      ],
+      "url": "https://learn.microsoft.com/en-us/azure/foundry/concepts/observability",
+      "type": "doc-oficial",
+      "evidence": "guia-oficial",
+      "status": "MATIZADA-corregida",
+      "lens": "C1 definiciones y anatomía",
+      "verified": true
+    },
+    "F-C1-07": {
+      "id": "F-C1-07",
+      "title": "Holistic Evaluation of Language Models (Evaluación holística de modelos de lenguaje, HELM) — escenario, adaptación y métrica",
+      "authors": [
+        "Percy Liang, Rishi Bommasani, Tony Lee, Dimitris Tsipras, Dilara Soylu y 45 coautores más (Stanford CRFM)"
+      ],
+      "url": "https://arxiv.org/abs/2211.09110",
+      "type": "paper",
+      "evidence": "experimento",
+      "status": "CONFIRMADA",
+      "lens": "C1 definiciones y anatomía",
+      "verified": true
+    },
+    "F-C1-08": {
+      "id": "F-C1-08",
+      "title": "Inspect — Tasks (Tareas), con Datasets y Scorers — marco de evaluación del UK AI Security Institute",
+      "authors": [
+        "UK AI Security Institute (Instituto de Seguridad de IA del Reino Unido) y Meridian Labs"
+      ],
+      "url": "https://inspect.aisi.org.uk/tasks.html",
+      "type": "herramienta",
+      "evidence": "guia-oficial",
+      "status": "CONFIRMADA",
+      "lens": "C1 definiciones y anatomía",
+      "verified": true
+    },
+    "F-C1-09": {
+      "id": "F-C1-09",
+      "title": "Task Configuration (Configuración de tareas) — lm-evaluation-harness de EleutherAI",
+      "authors": [
+        "EleutherAI (proyecto de código abierto; guía del repositorio)"
+      ],
+      "url": "https://github.com/EleutherAI/lm-evaluation-harness/blob/main/docs/task_guide.md",
+      "type": "herramienta",
+      "evidence": "guia-oficial",
+      "status": "CONFIRMADA",
+      "lens": "C1 definiciones y anatomía",
+      "verified": true
+    },
+    "F-C1-10": {
+      "id": "F-C1-10",
+      "title": "Evaluation concepts (Conceptos de evaluación) — LangSmith",
+      "authors": [
+        "LangChain (documentación de LangSmith; sin autor individual)"
+      ],
+      "url": "https://docs.langchain.com/langsmith/evaluation-concepts",
+      "type": "doc-oficial",
+      "evidence": "guia-oficial",
+      "status": "CONFIRMADA",
+      "lens": "C1 definiciones y anatomía",
+      "verified": true
+    },
+    "F-C2-01": {
+      "id": "F-C2-01",
+      "title": "Inspect AI — Task, dataset, solver, scorer y el visor Inspect View",
+      "authors": [
+        "UK AI Security Institute (UK AISI), documentación oficial de Inspect"
+      ],
+      "url": "https://inspect.aisi.org.uk/tasks.html",
+      "type": "doc-oficial",
+      "evidence": "guia-oficial",
+      "status": "MATIZADA-corregida",
+      "lens": "C2 frameworks y visores",
+      "verified": true
+    },
+    "F-C2-02": {
+      "id": "F-C2-02",
+      "title": "promptfoo — configuración YAML (prompts, providers, tests, assert) y visor web",
+      "authors": [
+        "Promptfoo, Inc., documentación oficial"
+      ],
+      "url": "https://www.promptfoo.dev/docs/configuration/reference/",
+      "type": "doc-oficial",
+      "evidence": "guia-oficial",
+      "status": "MATIZADA-corregida",
+      "lens": "C2 frameworks y visores",
+      "verified": true
+    },
+    "F-C2-03": {
+      "id": "F-C2-03",
+      "title": "OpenAI Evals — registro YAML + JSONL (openai/evals) y Evals API (data_source_config, testing_criteria), en retiro",
+      "authors": [
+        "OpenAI, documentación oficial y repositorio openai/evals"
+      ],
+      "url": "https://developers.openai.com/api/docs/guides/evals",
+      "type": "doc-oficial",
+      "evidence": "guia-oficial",
+      "status": "MATIZADA-corregida",
+      "lens": "C2 frameworks y visores",
+      "verified": true
+    },
+    "F-C2-04": {
+      "id": "F-C2-04",
+      "title": "EleutherAI lm-evaluation-harness — task YAML (TaskConfig), filtros y métricas",
+      "authors": [
+        "EleutherAI, documentación del repositorio lm-evaluation-harness"
+      ],
+      "url": "https://github.com/EleutherAI/lm-evaluation-harness/blob/main/docs/task_guide.md",
+      "type": "doc-oficial",
+      "evidence": "guia-oficial",
+      "status": "CONFIRMADA",
+      "lens": "C2 frameworks y visores",
+      "verified": true
+    },
+    "F-C2-05": {
+      "id": "F-C2-05",
+      "title": "DeepEval — LLMTestCase, métricas con umbral y G-Eval (juez LLM con criterios o pasos)",
+      "authors": [
+        "Confident AI, documentación oficial de DeepEval (v4.2.8)"
+      ],
+      "url": "https://deepeval.com/docs/evaluation-test-cases",
+      "type": "doc-oficial",
+      "evidence": "guia-oficial",
+      "status": "MATIZADA-corregida",
+      "lens": "C2 frameworks y visores",
+      "verified": true
+    },
+    "F-C2-06": {
+      "id": "F-C2-06",
+      "title": "Ragas — muestras de evaluación, tipos de métrica y principios de diseño de métricas",
+      "authors": [
+        "Exploding Gradients, documentación oficial de Ragas"
+      ],
+      "url": "https://docs.ragas.io/en/stable/concepts/metrics/overview/",
+      "type": "doc-oficial",
+      "evidence": "guia-oficial",
+      "status": "MATIZADA-corregida",
+      "lens": "C2 frameworks y visores",
+      "verified": true
+    },
+    "F-C2-07": {
+      "id": "F-C2-07",
+      "title": "LangSmith — datasets, ejemplos, evaluadores, experimentos y vista de comparación",
+      "authors": [
+        "LangChain, documentación oficial de LangSmith"
+      ],
+      "url": "https://docs.langchain.com/langsmith/evaluation-concepts",
+      "type": "doc-oficial",
+      "evidence": "guia-oficial",
+      "status": "MATIZADA-corregida",
+      "lens": "C2 frameworks y visores",
+      "verified": true
+    },
+    "F-C2-08": {
+      "id": "F-C2-08",
+      "title": "Braintrust — Eval(data, task, scores), experimentos inmutables y comparación con diff",
+      "authors": [
+        "Braintrust Data, documentación oficial"
+      ],
+      "url": "https://www.braintrust.dev/docs/evaluate",
+      "type": "doc-oficial",
+      "evidence": "guia-oficial",
+      "status": "MATIZADA-corregida",
+      "lens": "C2 frameworks y visores",
+      "verified": true
+    },
+    "F-C2-09": {
+      "id": "F-C2-09",
+      "title": "Arize Phoenix — evaluadores con etiquetas, Score y experimentos sobre datasets",
+      "authors": [
+        "Arize AI, documentación oficial de Phoenix"
+      ],
+      "url": "https://arize.com/docs/phoenix/evaluation/how-to-evals/custom-llm-evaluators",
+      "type": "doc-oficial",
+      "evidence": "guia-oficial",
+      "status": "CONFIRMADA",
+      "lens": "C2 frameworks y visores",
+      "verified": true
+    },
+    "F-C2-10": {
+      "id": "F-C2-10",
+      "title": "ElevenLabs Agents — pruebas de agente (llm, tool, simulation), pruebas probabilísticas y agrupación de fallos",
+      "authors": [
+        "ElevenLabs, documentación oficial y referencia de API"
+      ],
+      "url": "https://elevenlabs.io/docs/eleven-agents/customization/agent-testing",
+      "type": "doc-oficial",
+      "evidence": "guia-oficial",
+      "status": "MATIZADA-corregida",
+      "lens": "C2 frameworks y visores",
+      "verified": true
+    },
+    "F-C3-01": {
+      "id": "F-C3-01",
+      "title": "Demystifying evals for AI agents (Evals de agentes de IA sin misterio) — ejes para clasificar evals",
+      "authors": [
+        "Mikaela Grace, Jeremy Hadfield, Rodrigo Olivares y Jiri De Jonghe (Anthropic)"
+      ],
+      "url": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents",
+      "type": "blog",
+      "evidence": "opinion-experta",
+      "status": "MATIZADA-corregida",
+      "lens": "C3 taxonomía",
+      "verified": true
+    },
+    "F-C3-02": {
+      "id": "F-C3-02",
+      "title": "Your AI Product Needs Evals (Tu producto de IA necesita evals) — los tres niveles de evaluación",
+      "authors": [
+        "Hamel Husain"
+      ],
+      "url": "https://hamel.dev/blog/posts/evals/",
+      "type": "blog",
+      "evidence": "opinion-experta",
+      "status": "MATIZADA-corregida",
+      "lens": "C3 taxonomía",
+      "verified": true
+    },
+    "F-C3-03": {
+      "id": "F-C3-03",
+      "title": "Evaluating the Effectiveness of LLM-Evaluators, aka LLM-as-Judge (Qué tan bien califican los evaluadores LLM) — puntual, por pares y con referencia",
+      "authors": [
+        "Eugene Yan"
+      ],
+      "url": "https://eugeneyan.com/writing/llm-evaluators/",
+      "type": "blog",
+      "evidence": "opinion-experta",
+      "status": "MATIZADA-corregida",
+      "lens": "C3 taxonomía",
+      "verified": true
+    },
+    "F-C3-04": {
+      "id": "F-C3-04",
+      "title": "AI Engineering (Ingeniería de IA), resúmenes de los capítulos 3, 4, 6 y 10 — evaluación exacta, subjetiva y comparativa",
+      "authors": [
+        "Chip Huyen"
+      ],
+      "url": "https://github.com/chiphuyen/aie-book/blob/main/chapter-summaries.md",
+      "type": "libro",
+      "evidence": "opinion-experta",
+      "status": "MATIZADA-corregida",
+      "lens": "C3 taxonomía",
+      "verified": true
+    },
+    "F-C3-05": {
+      "id": "F-C3-05",
+      "title": "Evaluation concepts (Conceptos de evaluación) de LangSmith, con las páginas Evaluation types y Application-specific evaluation approaches",
+      "authors": [
+        "LangChain (documentación de LangSmith)"
+      ],
+      "url": "https://docs.langchain.com/langsmith/evaluation-concepts",
+      "type": "doc-oficial",
+      "evidence": "guia-oficial",
+      "status": "CONFIRMADA",
+      "lens": "C3 taxonomía",
+      "verified": true
+    },
+    "F-C3-06": {
+      "id": "F-C3-06",
+      "title": "How to Evaluate LLMs, A Complete Metric Framework (Cómo evaluar LLM, un marco completo de métricas) — evaluación online con pruebas A/B",
+      "authors": [
+        "Widad Machmouchi y Somit Gupta (Experimentation Platform, Microsoft)"
+      ],
+      "url": "https://www.microsoft.com/en-us/research/group/experimentation-platform-exp/articles/how-to-evaluate-llms-a-complete-metric-framework/",
+      "type": "blog",
+      "evidence": "opinion-experta",
+      "status": "MATIZADA-corregida",
+      "lens": "C3 taxonomía",
+      "verified": true
+    },
+    "F-C3-07": {
+      "id": "F-C3-07",
+      "title": "A Survey on Evaluation of Large Language Models (Panorama de la evaluación de modelos de lenguaje grandes) — qué, dónde y cómo evaluar",
+      "authors": [
+        "Yupeng Chang, Xu Wang, Jindong Wang, Yuan Wu, Linyi Yang, Kaijie Zhu, Hao Chen, Xiaoyuan Yi, Cunxiang Wang, Yidong Wang, Wei Ye, Yue Zhang, Yi Chang, Philip S. Yu, Qiang Yang y Xing Xie"
+      ],
+      "url": "https://arxiv.org/abs/2307.03109",
+      "type": "paper",
+      "evidence": "opinion-experta",
+      "status": "MATIZADA-corregida",
+      "lens": "C3 taxonomía",
+      "verified": true
+    },
+    "F-C3-08": {
+      "id": "F-C3-08",
+      "title": "Evaluation and Benchmarking of LLM Agents, A Survey (Evaluación y benchmarks de agentes LLM, un panorama) — taxonomía de dos dimensiones",
+      "authors": [
+        "Mahmoud Mohammadi, Yipeng Li, Jane Lo y Wendy Yip (SAP Labs)"
+      ],
+      "url": "https://arxiv.org/html/2507.21504",
+      "type": "paper",
+      "evidence": "opinion-experta",
+      "status": "MATIZADA-corregida",
+      "lens": "C3 taxonomía",
+      "verified": true
+    },
+    "F-C3-09": {
+      "id": "F-C3-09",
+      "title": "Evaluation of Retrieval-Augmented Generation, A Survey (Evaluación de la generación aumentada por recuperación, un panorama) — recuperación frente a generación",
+      "authors": [
+        "Hao Yu, Aoran Gan, Kai Zhang, Shiwei Tong, Qi Liu y Zhaofeng Liu"
+      ],
+      "url": "https://arxiv.org/html/2405.07437",
+      "type": "paper",
+      "evidence": "opinion-experta",
+      "status": "MATIZADA-corregida",
+      "lens": "C3 taxonomía",
+      "verified": true
+    },
+    "F-C3-10": {
+      "id": "F-C3-10",
+      "title": "Preparedness Framework, Version 2 (Marco de Preparación, versión 2) — evals de capacidades peligrosas y red-teaming",
+      "authors": [
+        "OpenAI"
+      ],
+      "url": "https://cdn.openai.com/pdf/18a02b5d-6b67-4cec-ab64-68cdfbddebcd/preparedness-framework-v2.pdf",
+      "type": "doc-oficial",
+      "evidence": "guia-oficial",
+      "status": "MATIZADA-corregida",
+      "lens": "C3 taxonomía",
+      "verified": true
+    },
+    "F-C4-01": {
+      "id": "F-C4-01",
+      "title": "Your AI Product Needs Evals (Tu producto de IA necesita evals) — tres niveles de evaluación y el caso Rechat",
+      "authors": [
+        "Hamel Husain"
+      ],
+      "url": "https://hamel.dev/blog/posts/evals/",
+      "type": "blog",
+      "evidence": "opinion-experta",
+      "status": "MATIZADA-corregida",
+      "lens": "C4 proceso y buenas prácticas",
+      "verified": true
+    },
+    "F-C4-02": {
+      "id": "F-C4-02",
+      "title": "A Field Guide to Rapidly Improving AI Products (Guía de campo para mejorar rápido productos de IA) — análisis de errores primero",
+      "authors": [
+        "Hamel Husain"
+      ],
+      "url": "https://hamel.dev/blog/posts/field-guide/",
+      "type": "blog",
+      "evidence": "opinion-experta",
+      "status": "MATIZADA-corregida",
+      "lens": "C4 proceso y buenas prácticas",
+      "verified": true
+    },
+    "F-C4-03": {
+      "id": "F-C4-03",
+      "title": "AI Evals — Everything You Need to Know (Evals de IA: todo lo que necesitas saber) — preguntas frecuentes de Husain y Shankar",
+      "authors": [
+        "Hamel Husain y Shreya Shankar"
+      ],
+      "url": "https://hamel.dev/blog/posts/evals-faq/",
+      "type": "blog",
+      "evidence": "opinion-experta",
+      "status": "CONFIRMADA",
+      "lens": "C4 proceso y buenas prácticas",
+      "verified": true
+    },
+    "F-C4-04": {
+      "id": "F-C4-04",
+      "title": "Who Validates the Validators? (¿Quién valida a los validadores?) — EvalGen y la deriva de criterios, leído como regla de proceso",
+      "authors": [
+        "Shreya Shankar, J.D. Zamfirescu-Pereira, Björn Hartmann, Aditya G. Parameswaran e Ian Arawjo"
+      ],
+      "url": "https://arxiv.org/abs/2404.12272",
+      "type": "paper",
+      "evidence": "experimento",
+      "status": "MATIZADA-corregida",
+      "lens": "C4 proceso y buenas prácticas",
+      "verified": true
+    },
+    "F-C4-05": {
+      "id": "F-C4-05",
+      "title": "An LLM-as-Judge Won't Save The Product—Fixing Your Process Will (Un juez LLM no salvará el producto; arreglar tu proceso sí) — desarrollo guiado por evals",
+      "authors": [
+        "Eugene Yan"
+      ],
+      "url": "https://eugeneyan.com/writing/eval-process/",
+      "type": "blog",
+      "evidence": "opinion-experta",
+      "status": "MATIZADA-corregida",
+      "lens": "C4 proceso y buenas prácticas",
+      "verified": true
+    },
+    "F-C4-06": {
+      "id": "F-C4-06",
+      "title": "A statistical approach to model evaluations (Un enfoque estadístico para evaluar modelos) — tamaño de muestra y barras de error como paso del proceso",
+      "authors": [
+        "Evan Miller firma el paper \"Adding Error Bars to Evals\" (arXiv 2411.00640); el resumen en el blog de Anthropic no lleva firma"
+      ],
+      "url": "https://www.anthropic.com/research/statistical-approach-to-model-evals",
+      "type": "articulo",
+      "evidence": "experimento",
+      "status": "MATIZADA-corregida",
+      "lens": "C4 proceso y buenas prácticas",
+      "verified": true
+    },
+    "F-C4-07": {
+      "id": "F-C4-07",
+      "title": "Define success criteria and build evaluations (Define criterios de éxito y construye evaluaciones) — guía oficial de la plataforma Claude, leída como proceso",
+      "authors": [
+        "Anthropic (documentación de la plataforma Claude, sin autor individual)"
+      ],
+      "url": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+      "type": "doc-oficial",
+      "evidence": "guia-oficial",
+      "status": "MATIZADA-corregida",
+      "lens": "C4 proceso y buenas prácticas",
+      "verified": true
+    },
+    "F-C4-08": {
+      "id": "F-C4-08",
+      "title": "What We've Learned From A Year of Building with LLMs (Lo que aprendimos en un año construyendo con LLM) — sección de evaluación y datos",
+      "authors": [
+        "Eugene Yan, Bryan Bischof, Charles Frye, Hamel Husain, Jason Liu y Shreya Shankar"
+      ],
+      "url": "https://applied-llms.org/",
+      "type": "articulo",
+      "evidence": "opinion-experta",
+      "status": "CONFIRMADA",
+      "lens": "C4 proceso y buenas prácticas",
+      "verified": true
+    },
+    "F-C4-09": {
+      "id": "F-C4-09",
+      "title": "Using LLM-as-a-Judge For Evaluation — A Complete Guide (Usar un juez LLM para evaluar: guía completa) — proceso \"Critique Shadowing\" y datos por dimensiones",
+      "authors": [
+        "Hamel Husain"
+      ],
+      "url": "https://hamel.dev/blog/posts/llm-judge/",
+      "type": "blog",
+      "evidence": "opinion-experta",
+      "status": "MATIZADA-corregida",
+      "lens": "C4 proceso y buenas prácticas",
+      "verified": true
+    },
+    "F-C4-10": {
+      "id": "F-C4-10",
+      "title": "Evaluation best practices (Buenas prácticas de evaluación) — guía de OpenAI sobre desarrollo guiado por evals y evaluación continua",
+      "authors": [
+        "OpenAI (documentación para desarrolladores, sin autor individual)"
+      ],
+      "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+      "type": "doc-oficial",
+      "evidence": "guia-oficial",
+      "status": "CONFIRMADA",
+      "lens": "C4 proceso y buenas prácticas",
+      "verified": true
+    },
+    "F-C5-01": {
+      "id": "F-C5-01",
+      "title": "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena (Juzgar al LLM como juez con MT-Bench y Chatbot Arena)",
+      "authors": [
+        "Lianmin Zheng, Wei-Lin Chiang, Ying Sheng, Siyuan Zhuang, Zhanghao Wu, Yonghao Zhuang, Zi Lin, Zhuohan Li, Dacheng Li, Eric P. Xing, Hao Zhang, Joseph E. Gonzalez, Ion Stoica"
+      ],
+      "url": "https://arxiv.org/abs/2306.05685",
+      "type": "paper",
+      "evidence": "experimento",
+      "status": "CONFIRMADA",
+      "lens": "C5 calificadores y juez",
+      "verified": true
+    },
+    "F-C5-02": {
+      "id": "F-C5-02",
+      "title": "G-Eval: NLG Evaluation using GPT-4 with Better Human Alignment (G-Eval: evaluación de generación de texto con GPT-4 mejor alineada con humanos)",
+      "authors": [
+        "Yang Liu, Dan Iter, Yichong Xu, Shuohang Wang, Ruochen Xu, Chenguang Zhu (Microsoft)"
+      ],
+      "url": "https://arxiv.org/abs/2303.16634",
+      "type": "paper",
+      "evidence": "experimento",
+      "status": "MATIZADA-corregida",
+      "lens": "C5 calificadores y juez",
+      "verified": true
+    },
+    "F-C5-03": {
+      "id": "F-C5-03",
+      "title": "Prometheus 2: An Open Source Language Model Specialized in Evaluating Other Language Models (Prometheus 2: un modelo abierto especializado en evaluar otros modelos)",
+      "authors": [
+        "Seungone Kim, Juyoung Suk, Shayne Longpre, Bill Yuchen Lin, Jamin Shin, Sean Welleck, Graham Neubig, Moontae Lee, Kyungjae Lee, Minjoon Seo"
+      ],
+      "url": "https://arxiv.org/abs/2405.01535",
+      "type": "paper",
+      "evidence": "experimento",
+      "status": "MATIZADA-corregida",
+      "lens": "C5 calificadores y juez",
+      "verified": true
+    },
+    "F-C5-04": {
+      "id": "F-C5-04",
+      "title": "A Survey on LLM-as-a-Judge (Revisión sobre el LLM como juez)",
+      "authors": [
+        "Jiawei Gu, Xuhui Jiang, Zhichao Shi, Hexiang Tan, Xuehao Zhai, Chengjin Xu, Wei Li, Yinghan Shen, Shengjie Ma, Honghao Liu, Saizhuo Wang, Kun Zhang, Yuanzhuo Wang, Wen Gao, Lionel Ni, Jian Guo"
+      ],
+      "url": "https://arxiv.org/abs/2411.15594",
+      "type": "paper",
+      "evidence": "experimento",
+      "status": "MATIZADA-corregida",
+      "lens": "C5 calificadores y juez",
+      "verified": true
+    },
+    "F-C5-05": {
+      "id": "F-C5-05",
+      "title": "Justice or Prejudice? Quantifying Biases in LLM-as-a-Judge (¿Justicia o prejuicio? Cuantificar los sesgos del LLM como juez)",
+      "authors": [
+        "Jiayi Ye, Yanbo Wang, Yue Huang, Dongping Chen, Qihui Zhang, Nuno Moniz, Tian Gao, Werner Geyer, Chao Huang, Pin-Yu Chen, Nitesh V. Chawla, Xiangliang Zhang"
+      ],
+      "url": "https://arxiv.org/abs/2410.02736",
+      "type": "paper",
+      "evidence": "experimento",
+      "status": "CONFIRMADA",
+      "lens": "C5 calificadores y juez",
+      "verified": true
+    },
+    "F-C5-06": {
+      "id": "F-C5-06",
+      "title": "CheckEval: A reliable LLM-as-a-Judge framework for evaluating text generation using checklists (CheckEval: un marco fiable de LLM como juez que evalúa texto con listas de verificación)",
+      "authors": [
+        "Yukyung Lee, Joonghoon Kim, Jaehee Kim, Hyowon Cho, Jaewook Kang, Pilsung Kang, Najoung Kim"
+      ],
+      "url": "https://arxiv.org/abs/2403.18771",
+      "type": "paper",
+      "evidence": "experimento",
+      "status": "MATIZADA-corregida",
+      "lens": "C5 calificadores y juez",
+      "verified": true
+    },
+    "F-C5-07": {
+      "id": "F-C5-07",
+      "title": "Using LLM-as-a-Judge For Evaluation: A Complete Guide (Usar el LLM como juez para evaluar: guía completa; antes titulado Creating a LLM-as-a-Judge That Drives Business Results)",
+      "authors": [
+        "Hamel Husain"
+      ],
+      "url": "https://hamel.dev/blog/posts/llm-judge/",
+      "type": "blog",
+      "evidence": "opinion-experta",
+      "status": "MATIZADA-corregida",
+      "lens": "C5 calificadores y juez",
+      "verified": true
+    },
+    "F-C5-08": {
+      "id": "F-C5-08",
+      "title": "Graders — OpenAI API docs (Calificadores — documentación de la API de OpenAI) y referencia de testing_criteria del Evals API",
+      "authors": [
+        "OpenAI"
+      ],
+      "url": "https://developers.openai.com/api/docs/guides/graders",
+      "type": "doc-oficial",
+      "evidence": "guia-oficial",
+      "status": "MATIZADA-corregida",
+      "lens": "C5 calificadores y juez",
+      "verified": true
+    },
+    "F-C5-09": {
+      "id": "F-C5-09",
+      "title": "Judging the Judges: Evaluating Alignment and Vulnerabilities in LLMs-as-Judges (Juzgar a los jueces: alineación y vulnerabilidades de los LLM como jueces)",
+      "authors": [
+        "Aman Singh Thakur, Kartik Choudhary, Venkat Srinik Ramayapally, Sankaran Vaidyanathan, Dieuwke Hupkes"
+      ],
+      "url": "https://arxiv.org/abs/2406.12624",
+      "type": "paper",
+      "evidence": "experimento",
+      "status": "MATIZADA-corregida",
+      "lens": "C5 calificadores y juez",
+      "verified": true
+    },
+    "F-C5-10": {
+      "id": "F-C5-10",
+      "title": "Define success criteria and build evaluations (Definir criterios de éxito y construir evaluaciones) — Claude Docs, sección de calificación",
+      "authors": [
+        "Anthropic"
+      ],
+      "url": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+      "type": "doc-oficial",
+      "evidence": "guia-oficial",
+      "status": "MATIZADA-corregida",
+      "lens": "C5 calificadores y juez",
+      "verified": true
+    },
+    "F-C6-01": {
+      "id": "F-C6-01",
+      "title": "BetterBench: Assessing AI Benchmarks, Uncovering Issues, and Establishing Best Practices (BetterBench: evaluar bancos de pruebas de IA, descubrir problemas y fijar buenas prácticas)",
+      "authors": [
+        "Anka Reuel, Amelia Hardy, Chandler Smith, Max Lamparth, Malcolm Hardy y Mykel J. Kochenderfer (Stanford University y Northeastern University)"
+      ],
+      "url": "https://arxiv.org/abs/2411.12990",
+      "type": "paper",
+      "evidence": "experimento",
+      "status": "MATIZADA-corregida",
+      "lens": "C6 calidad y documentación",
+      "verified": true
+    },
+    "F-C6-02": {
+      "id": "F-C6-02",
+      "title": "Measuring what Matters: Construct Validity in Large Language Model Benchmarks (Medir lo que importa: validez de constructo en bancos de pruebas de modelos de lenguaje grandes)",
+      "authors": [
+        "Andrew M. Bean, Ryan Othniel Kearns, Angelika Romanou, Franziska Sofia Hafner, Harry Mayne y otros 37 (42 en total)"
+      ],
+      "url": "https://arxiv.org/abs/2511.04703",
+      "type": "paper",
+      "evidence": "experimento",
+      "status": "MATIZADA-corregida",
+      "lens": "C6 calidad y documentación",
+      "verified": true
+    },
+    "F-C6-03": {
+      "id": "F-C6-03",
+      "title": "Adding Error Bars to Evals: A Statistical Approach to Language Model Evaluations (Agregar barras de error a las evals: un enfoque estadístico para evaluar modelos de lenguaje)",
+      "authors": [
+        "Evan Miller (Anthropic)"
+      ],
+      "url": "https://arxiv.org/abs/2411.00640",
+      "type": "paper",
+      "evidence": "opinion-experta",
+      "status": "MATIZADA-corregida",
+      "lens": "C6 calidad y documentación",
+      "verified": true
+    },
+    "F-C6-04": {
+      "id": "F-C6-04",
+      "title": "State of What Art? A Call for Multi-Prompt LLM Evaluation (¿Estado del arte de qué? Un llamado a evaluar LLM con varias instrucciones)",
+      "authors": [
+        "Moran Mizrahi, Guy Kaplan, Dan Malkin, Rotem Dror, Dafna Shahaf y Gabriel Stanovsky (Universidad Hebrea de Jerusalén y Universidad de Haifa)"
+      ],
+      "url": "https://arxiv.org/abs/2401.00595",
+      "type": "paper",
+      "evidence": "experimento",
+      "status": "CONFIRMADA",
+      "lens": "C6 calidad y documentación",
+      "verified": true
+    },
+    "F-C6-05": {
+      "id": "F-C6-05",
+      "title": "Benchmarking Large Language Models Under Data Contamination: A Survey from Static to Dynamic Evaluation (Evaluar modelos de lenguaje grandes bajo contaminación de datos: revisión de la evaluación estática a la dinámica). Título de la versión 2; la página de arXiv conserva el de la versión 1: Recent Advances in Large Langauge Model Benchmarks against Data Contamination: From Static to Dynamic Evaluation",
+      "authors": [
+        "Simin Chen, Yiming Chen, Zexin Li, Yifan Jiang, Zhongwei Wan, Yixin He, Dezhi Ran, Tianle Gu, Haizhou Li, Tao Xie y Baishakhi Ray"
+      ],
+      "url": "https://arxiv.org/abs/2502.17521",
+      "type": "paper",
+      "evidence": "opinion-experta",
+      "status": "CONFIRMADA",
+      "lens": "C6 calidad y documentación",
+      "verified": true
+    },
+    "F-C6-06": {
+      "id": "F-C6-06",
+      "title": "When AI Benchmarks Plateau: A Systematic Study of Benchmark Saturation (Cuando los bancos de pruebas de IA se estancan: estudio sistemático de su saturación)",
+      "authors": [
+        "Mubashara Akhtar, Anka Reuel, Prajna Soni y otros 34 (37 en total; coalición EvalEval)"
+      ],
+      "url": "https://arxiv.org/abs/2602.16763",
+      "type": "paper",
+      "evidence": "experimento",
+      "status": "CONFIRMADA",
+      "lens": "C6 calidad y documentación",
+      "verified": true
+    },
+    "F-C6-07": {
+      "id": "F-C6-07",
+      "title": "Holistic Evaluation of Language Models (Evaluación holística de modelos de lenguaje, HELM)",
+      "authors": [
+        "Percy Liang, Rishi Bommasani, Tony Lee, Dimitris Tsipras y otros 46 (50 en total; Center for Research on Foundation Models, Stanford University)"
+      ],
+      "url": "https://arxiv.org/abs/2211.09110",
+      "type": "paper",
+      "evidence": "experimento",
+      "status": "CONFIRMADA",
+      "lens": "C6 calidad y documentación",
+      "verified": true
+    },
+    "F-C6-08": {
+      "id": "F-C6-08",
+      "title": "Datasheets for Datasets (Hojas de datos para conjuntos de datos)",
+      "authors": [
+        "Timnit Gebru, Jamie Morgenstern, Briana Vecchione, Jennifer Wortman Vaughan, Hanna Wallach, Hal Daumé III y Kate Crawford"
+      ],
+      "url": "https://arxiv.org/abs/1803.09010",
+      "type": "paper",
+      "evidence": "opinion-experta",
+      "status": "MATIZADA-corregida",
+      "lens": "C6 calidad y documentación",
+      "verified": true
+    },
+    "F-C6-09": {
+      "id": "F-C6-09",
+      "title": "Model Cards for Model Reporting (Tarjetas de modelo para reportar modelos)",
+      "authors": [
+        "Margaret Mitchell, Simone Wu, Andrew Zaldivar, Parker Barnes, Lucy Vasserman, Ben Hutchinson, Elena Spitzer, Inioluwa Deborah Raji y Timnit Gebru"
+      ],
+      "url": "https://arxiv.org/abs/1810.03993",
+      "type": "paper",
+      "evidence": "opinion-experta",
+      "status": "CONFIRMADA",
+      "lens": "C6 calidad y documentación",
+      "verified": true
+    },
+    "F-C6-10": {
+      "id": "F-C6-10",
+      "title": "Eval Factsheets: A Structured Framework for Documenting AI Evaluations (Fichas técnicas de evals: un marco estructurado para documentar evaluaciones de IA)",
+      "authors": [
+        "Florian Bordes, Candace Ross, Justine T Kao, Evangelia Spiliopoulou y Adina Williams (FAIR at Meta)"
+      ],
+      "url": "https://arxiv.org/abs/2512.04062",
+      "type": "paper",
+      "evidence": "opinion-experta",
+      "status": "MATIZADA-corregida",
+      "lens": "C6 calidad y documentación",
+      "verified": true
+    },
+    "F-C7-01": {
+      "id": "F-C7-01",
+      "title": "How we evaluate AI models and LLMs for GitHub Copilot (Cómo evaluamos modelos de IA y LLM para GitHub Copilot)",
+      "authors": [
+        "Connor Adams y Klint Finley (GitHub)"
+      ],
+      "url": "https://github.blog/ai-and-ml/generative-ai/how-we-evaluate-models-for-github-copilot/",
+      "type": "blog",
+      "evidence": "opinion-experta",
+      "status": "MATIZADA-corregida",
+      "lens": "C7 casos reales",
+      "verified": true
+    },
+    "F-C7-02": {
+      "id": "F-C7-02",
+      "title": "Eval-driven development — Build better AI faster (Desarrollo guiado por evals — construir mejor IA más rápido), caso v0",
+      "authors": [
+        "Malte Ubl, Alice Alexandra Moore e Ido Pesok (Vercel)"
+      ],
+      "url": "https://vercel.com/blog/eval-driven-development-build-better-ai-faster",
+      "type": "blog",
+      "evidence": "opinion-experta",
+      "status": "MATIZADA-corregida",
+      "lens": "C7 casos reales",
+      "verified": true
+    },
+    "F-C7-03": {
+      "id": "F-C7-03",
+      "title": "How Notion evaluates AI at scale across 70 engineers (Cómo Notion evalúa IA a escala con 70 ingenieros)",
+      "authors": [
+        "Braintrust (historia de cliente; entrevistada Sarah Sachs, líder de modelado de IA en Notion)"
+      ],
+      "url": "https://www.braintrust.dev/customers/notion",
+      "type": "blog",
+      "evidence": "opinion-experta",
+      "status": "MATIZADA-corregida",
+      "lens": "C7 casos reales",
+      "verified": true
+    },
+    "F-C7-05": {
+      "id": "F-C7-05",
+      "title": "Your AI Product Needs Evals (Tu producto de IA necesita evals) — caso Rechat y su asistente Lucy",
+      "authors": [
+        "Hamel Husain"
+      ],
+      "url": "https://hamel.dev/blog/posts/evals/",
+      "type": "blog",
+      "evidence": "opinion-experta",
+      "status": "MATIZADA-corregida",
+      "lens": "C7 casos reales",
+      "verified": true
+    },
+    "F-C7-07": {
+      "id": "F-C7-07",
+      "title": "Building production-ready agentic systems — Lessons from Shopify Sidekick (Construir sistemas agénticos listos para producción — lecciones de Shopify Sidekick), sección de evaluación",
+      "authors": [
+        "Andrew McNamara (Shopify)"
+      ],
+      "url": "https://shopify.engineering/building-production-ready-agentic-systems",
+      "type": "blog",
+      "evidence": "experimento",
+      "status": "CONFIRMADA",
+      "lens": "C7 casos reales",
+      "verified": true
+    },
+    "F-C7-10": {
+      "id": "F-C7-10",
+      "title": "State of Agent Engineering (Estado de la ingeniería de agentes) — encuesta de LangChain",
+      "authors": [
+        "LangChain"
+      ],
+      "url": "https://www.langchain.com/state-of-agent-engineering",
+      "type": "articulo",
+      "evidence": "experimento",
+      "status": "MATIZADA-corregida",
+      "lens": "C7 casos reales",
+      "verified": true
+    }
+  }
+}

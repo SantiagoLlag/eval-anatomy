@@ -1,0 +1,1087 @@
+{
+  "generated": "2026-10-02",
+  "generator": "scripts/generate_content.py — regenerate, never hand-edit",
+  "version": "1.0.0",
+  "note": "Severities are a proposal of the research vault; no source assigns them.",
+  "rules": [
+    {
+      "id": "purpose-declared",
+      "part": "purpose",
+      "severity": "warn",
+      "detection": "deterministic",
+      "check": "purpose.question no vacío",
+      "appliesIf": {},
+      "statement": {
+        "es": "La eval declara qué pregunta responde.",
+        "en": "The eval states which question it answers."
+      },
+      "rationale": {
+        "es": "Las guías de proceso empiezan por el propósito; sin él no se sabe si mide lo correcto.",
+        "en": "Process guides start from the purpose; without it you cannot tell if it measures the right thing."
+      },
+      "sources": [
+        "F-C1-02",
+        "F-C1-04",
+        "F-C6-10"
+      ]
+    },
+    {
+      "id": "purpose-decision",
+      "part": "purpose",
+      "severity": "info",
+      "detection": "deterministic",
+      "check": "purpose.decision no vacío",
+      "appliesIf": {},
+      "statement": {
+        "es": "La eval dice qué decisión permite tomar.",
+        "en": "The eval states which decision it enables."
+      },
+      "rationale": {
+        "es": "Una eval que no cambia ninguna decisión no vale su costo.",
+        "en": "An eval that changes no decision is not worth its cost."
+      },
+      "sources": [
+        "F-C4-05",
+        "F-C4-10"
+      ]
+    },
+    {
+      "id": "construct-observable",
+      "part": "purpose",
+      "severity": "error",
+      "detection": "llm-judge",
+      "check": "purpose.construct",
+      "appliesIf": {},
+      "statement": {
+        "es": "Lo que se mide está definido de forma observable.",
+        "en": "What is measured is defined observably."
+      },
+      "rationale": {
+        "es": "La falta de definición del fenómeno es una falla frecuente de validez en benchmarks.",
+        "en": "An undefined phenomenon is a frequent validity failure in benchmarks."
+      },
+      "sources": [
+        "F-C6-02",
+        "F-C6-01"
+      ]
+    },
+    {
+      "id": "out-of-scope",
+      "part": "purpose",
+      "severity": "warn",
+      "detection": "deterministic",
+      "check": "purpose.out_of_scope con al menos 1 elemento",
+      "appliesIf": {},
+      "statement": {
+        "es": "La eval dice qué queda fuera de su alcance.",
+        "en": "The eval states what is out of scope."
+      },
+      "rationale": {
+        "es": "Declarar exclusiones evita conclusiones que la eval no permite.",
+        "en": "Declaring exclusions prevents conclusions the eval does not support."
+      },
+      "sources": [
+        "F-C6-02",
+        "F-C6-07"
+      ]
+    },
+    {
+      "id": "grounded-in-real-failures",
+      "part": "purpose",
+      "severity": "warn",
+      "detection": "human",
+      "check": "purpose.origin_failures enlaza trazas o análisis de errores",
+      "appliesIf": {},
+      "statement": {
+        "es": "La eval nace de fallos observados, no imaginados.",
+        "en": "The eval comes from observed failures, not imagined ones."
+      },
+      "rationale": {
+        "es": "Escribir evals para errores que no ocurren gasta esfuerzo; los equipos parten de fallos reales.",
+        "en": "Writing evals for failures that do not happen wastes effort; teams start from real failures."
+      },
+      "sources": [
+        "F-C4-01",
+        "F-C4-03",
+        "F-C7-03",
+        "F-C7-05"
+      ]
+    },
+    {
+      "id": "cases-present",
+      "part": "cases",
+      "severity": "error",
+      "detection": "deterministic",
+      "check": "cases.count > 0 o cases.examples no vacío",
+      "appliesIf": {
+        "moment": [
+          "offline",
+          "backtesting"
+        ]
+      },
+      "statement": {
+        "es": "La eval tiene casos de prueba.",
+        "en": "The eval has test cases."
+      },
+      "rationale": {
+        "es": "Todas las fuentes de C1 incluyen casos con entradas.",
+        "en": "All C1 sources include cases with inputs."
+      },
+      "sources": [
+        "F-C1-01",
+        "F-C1-08",
+        "F-C1-10"
+      ]
+    },
+    {
+      "id": "cases-provenance",
+      "part": "cases",
+      "severity": "warn",
+      "detection": "deterministic",
+      "check": "cases.source y cases.collected presentes",
+      "appliesIf": {},
+      "statement": {
+        "es": "Declara de dónde salieron los casos y cuándo se juntaron.",
+        "en": "States where cases came from and when they were collected."
+      },
+      "rationale": {
+        "es": "Datos que no se parecen a producción no predicen lo que verán los usuarios; la fecha de corte ayuda a detectar contaminación.",
+        "en": "Data unlike production does not predict what users see; the cutoff date helps detect contamination."
+      },
+      "sources": [
+        "F-C4-10",
+        "F-C4-08",
+        "F-C6-05",
+        "F-C6-08"
+      ]
+    },
+    {
+      "id": "cases-tagged",
+      "part": "cases",
+      "severity": "info",
+      "detection": "deterministic",
+      "check": "cases.tags incluye typical, edge o adversarial",
+      "appliesIf": {},
+      "statement": {
+        "es": "Los casos están etiquetados como típicos, borde o adversarios.",
+        "en": "Cases are tagged as typical, edge or adversarial."
+      },
+      "rationale": {
+        "es": "Separar tipos de caso permite ver dónde falla el sistema.",
+        "en": "Separating case types shows where the system fails."
+      },
+      "sources": [
+        "F-C4-03",
+        "F-C4-07"
+      ]
+    },
+    {
+      "id": "synthetic-dimensions",
+      "part": "cases",
+      "severity": "warn",
+      "detection": "deterministic",
+      "check": "cases.synthetic_dimensions con al menos 2 elementos",
+      "appliesIf": {
+        "inputs-origin": [
+          "synthetic"
+        ]
+      },
+      "statement": {
+        "es": "Si hay casos sintéticos, declara las dimensiones que combina.",
+        "en": "If there are synthetic cases, it declares the dimensions combined."
+      },
+      "rationale": {
+        "es": "Sin estructura, los sintéticos salen genéricos y repetidos.",
+        "en": "Without structure, synthetic data comes out generic and repetitive."
+      },
+      "sources": [
+        "F-C4-03"
+      ]
+    },
+    {
+      "id": "sample-size-power",
+      "part": "cases",
+      "severity": "info",
+      "detection": "llm-judge",
+      "check": "cases.count frente a la diferencia que se quiere detectar",
+      "appliesIf": {
+        "purpose": [
+          "comparison"
+        ]
+      },
+      "statement": {
+        "es": "El número de casos alcanza para la diferencia que se quiere detectar.",
+        "en": "The number of cases is enough for the difference to detect."
+      },
+      "rationale": {
+        "es": "Con supuestos de Miller, ver 3 puntos de diferencia pide unas 1 000 preguntas; para arrancar bastan 20 a 50.",
+        "en": "Under Miller's assumptions, detecting 3 points needs about 1,000 questions; 20 to 50 are enough to start."
+      },
+      "sources": [
+        "F-C6-03",
+        "F-C1-01"
+      ]
+    },
+    {
+      "id": "reference-isolated",
+      "part": "reference",
+      "severity": "error",
+      "detection": "deterministic",
+      "check": "reference.visible_to_system == false",
+      "appliesIf": {
+        "parts": [
+          "reference"
+        ]
+      },
+      "statement": {
+        "es": "La referencia solo llega al calificador, nunca al sistema bajo prueba.",
+        "en": "The reference reaches only the grader, never the system under test."
+      },
+      "rationale": {
+        "es": "Si el sistema ve la respuesta esperada, la eval queda inválida.",
+        "en": "If the system sees the expected answer, the eval is invalid."
+      },
+      "sources": [
+        "F-C1-10"
+      ]
+    },
+    {
+      "id": "reference-source",
+      "part": "reference",
+      "severity": "warn",
+      "detection": "deterministic",
+      "check": "reference.produced_by presente; si es llm, debe ser llm-reviewed",
+      "appliesIf": {
+        "parts": [
+          "reference"
+        ]
+      },
+      "statement": {
+        "es": "Declara quién produjo la referencia; si fue un LLM, que la haya revisado una persona.",
+        "en": "States who produced the reference; if an LLM did, a person reviewed it."
+      },
+      "rationale": {
+        "es": "Una referencia generada por LLM hereda los sesgos del modelo.",
+        "en": "An LLM-generated reference inherits the model's biases."
+      },
+      "sources": [
+        "F-C4-02",
+        "F-C4-09",
+        "F-C6-10"
+      ]
+    },
+    {
+      "id": "system-config-published",
+      "part": "system",
+      "severity": "error",
+      "detection": "deterministic",
+      "check": "si system.fixed != false: system.prompt y system.params presentes",
+      "appliesIf": {},
+      "statement": {
+        "es": "Publica el prompt exacto y los parámetros del sistema bajo prueba.",
+        "en": "Publishes the exact prompt and parameters of the system under test."
+      },
+      "rationale": {
+        "es": "En HELM, cambiar solo cómo se arma el prompt movió un resultado de 79,1 % a 30,2 %.",
+        "en": "In HELM, changing only how the prompt is built moved a result from 79.1% to 30.2%."
+      },
+      "sources": [
+        "F-C1-07",
+        "F-C6-04",
+        "F-C6-01"
+      ]
+    },
+    {
+      "id": "prompt-variants",
+      "part": "system",
+      "severity": "info",
+      "detection": "deterministic",
+      "check": "system.prompt_variants >= 2",
+      "appliesIf": {
+        "purpose": [
+          "comparison"
+        ]
+      },
+      "statement": {
+        "es": "Al comparar modelos, prueba más de una redacción del prompt.",
+        "en": "When comparing models, test more than one prompt wording."
+      },
+      "rationale": {
+        "es": "Una sola redacción puede cambiar el orden de los modelos.",
+        "en": "A single wording can change the model ranking."
+      },
+      "sources": [
+        "F-C6-04"
+      ]
+    },
+    {
+      "id": "environment-reset",
+      "part": "environment",
+      "severity": "warn",
+      "detection": "deterministic",
+      "check": "environment.reset_per_trial == true",
+      "appliesIf": {
+        "structure": [
+          "agent-outcome",
+          "agent-trajectory"
+        ]
+      },
+      "statement": {
+        "es": "En evals de agente, el entorno empieza limpio en cada intento.",
+        "en": "In agent evals, the environment starts clean on every trial."
+      },
+      "rationale": {
+        "es": "El estado compartido entre intentos contamina el resultado.",
+        "en": "State shared across trials contaminates the result."
+      },
+      "sources": [
+        "F-C1-01"
+      ]
+    },
+    {
+      "id": "criteria-single-failure-mode",
+      "part": "criteria",
+      "severity": "warn",
+      "detection": "llm-judge",
+      "check": "cada criteria[].question mide un solo modo de fallo",
+      "appliesIf": {},
+      "statement": {
+        "es": "Cada criterio mide un solo modo de fallo.",
+        "en": "Each criterion measures a single failure mode."
+      },
+      "rationale": {
+        "es": "Un criterio que mezcla varias cosas no dice qué arreglar.",
+        "en": "A criterion mixing several things does not say what to fix."
+      },
+      "sources": [
+        "F-C4-03",
+        "F-C4-07"
+      ]
+    },
+    {
+      "id": "criteria-no-generic-terms",
+      "part": "criteria",
+      "severity": "warn",
+      "detection": "deterministic",
+      "check": "criteria[].question sin términos genéricos sin definir (calidad, utilidad, coherencia, helpfulness, quality, coherence)",
+      "appliesIf": {},
+      "statement": {
+        "es": "Los criterios no usan palabras genéricas sin definirlas.",
+        "en": "Criteria do not use generic words without defining them."
+      },
+      "rationale": {
+        "es": "Las métricas genéricas no siguen los fallos del producto y dan falsa sensación de avance.",
+        "en": "Generic metrics do not track product failures and give a false sense of progress."
+      },
+      "sources": [
+        "F-C4-02",
+        "F-C4-03"
+      ]
+    },
+    {
+      "id": "criteria-examples",
+      "part": "criteria",
+      "severity": "warn",
+      "detection": "deterministic",
+      "check": "cada criteria[] tiene pass_example y fail_example",
+      "appliesIf": {},
+      "statement": {
+        "es": "Cada criterio trae un ejemplo de pasa y uno de falla.",
+        "en": "Each criterion has a pass and a fail example."
+      },
+      "rationale": {
+        "es": "Los ejemplos calibrados mejoran la consistencia del juez (65,0 % → 77,5 % en una prueba).",
+        "en": "Calibrated examples improve judge consistency (65.0% → 77.5% in one test)."
+      },
+      "sources": [
+        "F-C5-01",
+        "F-C5-07",
+        "F-C5-08"
+      ]
+    },
+    {
+      "id": "code-before-judge",
+      "part": "criteria",
+      "severity": "info",
+      "detection": "llm-judge",
+      "check": "criterios objetivos asignados a graders de tipo code",
+      "appliesIf": {},
+      "statement": {
+        "es": "Los criterios objetivos se revisan con código, no con un juez LLM.",
+        "en": "Objective criteria are checked with code, not an LLM judge."
+      },
+      "rationale": {
+        "es": "El código es más barato, rápido y repetible.",
+        "en": "Code is cheaper, faster and repeatable."
+      },
+      "sources": [
+        "F-C4-03",
+        "F-C4-07",
+        "F-C5-10"
+      ]
+    },
+    {
+      "id": "grader-declared",
+      "part": "grader",
+      "severity": "error",
+      "detection": "deterministic",
+      "check": "graders no vacío y cada criteria[].grader apunta a un grader existente",
+      "appliesIf": {},
+      "statement": {
+        "es": "Cada criterio tiene un calificador declarado.",
+        "en": "Every criterion has a declared grader."
+      },
+      "rationale": {
+        "es": "Las 10 fuentes de C1 tienen calificador; sin él no hay veredicto.",
+        "en": "All 10 C1 sources have a grader; without it there is no verdict."
+      },
+      "sources": [
+        "F-C1-01",
+        "F-C1-02",
+        "F-C1-08"
+      ]
+    },
+    {
+      "id": "judge-one-criterion",
+      "part": "grader",
+      "severity": "warn",
+      "detection": "deterministic",
+      "check": "cada grader llm-judge evalúa como máximo 1 criterio",
+      "appliesIf": {
+        "grader": [
+          "llm-judge"
+        ]
+      },
+      "statement": {
+        "es": "Cada juez LLM evalúa un solo criterio.",
+        "en": "Each LLM judge evaluates a single criterion."
+      },
+      "rationale": {
+        "es": "Un juez que revisa todo a la vez es difícil de alinear con humanos.",
+        "en": "A judge checking everything at once is hard to align with humans."
+      },
+      "sources": [
+        "F-C4-03",
+        "F-C1-01"
+      ]
+    },
+    {
+      "id": "judge-prompt-parts",
+      "part": "grader",
+      "severity": "warn",
+      "detection": "llm-judge",
+      "check": "graders[].prompt incluye criterio definido, rúbrica o preguntas sí/no, entradas delimitadas y formato de salida",
+      "appliesIf": {
+        "grader": [
+          "llm-judge"
+        ]
+      },
+      "statement": {
+        "es": "El prompt del juez define el criterio, trae rúbrica, delimita las entradas y fija el formato de salida.",
+        "en": "The judge prompt defines the criterion, includes a rubric, delimits inputs and fixes the output format."
+      },
+      "rationale": {
+        "es": "Son las partes que usan los jueces documentados (G-Eval, Prometheus, OpenAI, Anthropic).",
+        "en": "These are the parts documented judges use (G-Eval, Prometheus, OpenAI, Anthropic)."
+      },
+      "sources": [
+        "F-C5-02",
+        "F-C5-03",
+        "F-C5-08",
+        "F-C5-10"
+      ]
+    },
+    {
+      "id": "judge-reason-before-verdict",
+      "part": "grader",
+      "severity": "info",
+      "detection": "deterministic",
+      "check": "graders[].output_format == reason-then-verdict",
+      "appliesIf": {
+        "grader": [
+          "llm-judge"
+        ]
+      },
+      "statement": {
+        "es": "El juez escribe su razón antes del veredicto.",
+        "en": "The judge writes its reason before the verdict."
+      },
+      "rationale": {
+        "es": "Lo recomiendan varias fuentes, pero la evidencia es mixta: con GPT-3.5 empeoró. Pruébalo, no lo asumas.",
+        "en": "Several sources recommend it, but evidence is mixed: with GPT-3.5 it got worse. Test it, do not assume it."
+      },
+      "sources": [
+        "F-C5-03",
+        "F-C5-07",
+        "F-C5-10",
+        "F-C5-04"
+      ]
+    },
+    {
+      "id": "judge-different-model",
+      "part": "grader",
+      "severity": "warn",
+      "detection": "deterministic",
+      "check": "graders[].same_model_as_system == false o graders[].model registrado",
+      "appliesIf": {
+        "grader": [
+          "llm-judge"
+        ]
+      },
+      "statement": {
+        "es": "El modelo juez es distinto del que genera, o se registra cuál es cada uno.",
+        "en": "The judge model differs from the generator, or which is which is recorded."
+      },
+      "rationale": {
+        "es": "Los jueces favorecen sus propias salidas: hasta +25 % en una prueba no concluyente y error de hasta 16,1 % en otra.",
+        "en": "Judges favor their own outputs: up to +25% in one inconclusive test and up to 16.1% error in another."
+      },
+      "sources": [
+        "F-C5-01",
+        "F-C5-05"
+      ]
+    },
+    {
+      "id": "pairwise-swap-order",
+      "part": "grader",
+      "severity": "warn",
+      "detection": "deterministic",
+      "check": "graders[].swap_order == true",
+      "appliesIf": {
+        "judgment": [
+          "pairwise"
+        ]
+      },
+      "statement": {
+        "es": "En comparaciones por pares, se corren los dos órdenes.",
+        "en": "In pairwise comparisons, both orders are run."
+      },
+      "rationale": {
+        "es": "Al invertir el orden, la consistencia fue 65,0 % en GPT-4 y 23,8 % en Claude-v1.",
+        "en": "When swapping order, consistency was 65.0% for GPT-4 and 23.8% for Claude-v1."
+      },
+      "sources": [
+        "F-C5-01",
+        "F-C5-05"
+      ]
+    },
+    {
+      "id": "no-similarity-only-open-text",
+      "part": "grader",
+      "severity": "warn",
+      "detection": "llm-judge",
+      "check": "texto abierto calificado solo con BLEU/ROUGE/similitud",
+      "appliesIf": {
+        "grader": [
+          "similarity"
+        ]
+      },
+      "statement": {
+        "es": "El texto abierto no se califica solo con métricas de similitud.",
+        "en": "Open-ended text is not graded with similarity metrics alone."
+      },
+      "rationale": {
+        "es": "En SummEval, la correlación de esas métricas con humanos fue de 0,17 a 0,23.",
+        "en": "In SummEval, those metrics correlated 0.17 to 0.23 with humans."
+      },
+      "sources": [
+        "F-C5-02",
+        "F-C5-03"
+      ]
+    },
+    {
+      "id": "verdict-binary-or-anchored",
+      "part": "verdict",
+      "severity": "warn",
+      "detection": "deterministic",
+      "check": "verdict.scale es binary, o es ordinal con levels[].anchor y pass_cut",
+      "appliesIf": {},
+      "statement": {
+        "es": "El veredicto es binario, o la escala tiene anclas por nivel y corte de pasa/falla.",
+        "en": "The verdict is binary, or the scale has per-level anchors and a pass/fail cut."
+      },
+      "rationale": {
+        "es": "Con 12 jueces, el acuerdo sube de α 0,09 (escala 1-5) a α 0,48 (listas sí/no).",
+        "en": "Across 12 judges, agreement rises from α 0.09 (1–5 scale) to α 0.48 (yes/no lists)."
+      },
+      "sources": [
+        "F-C5-06",
+        "F-C4-02",
+        "F-C4-09"
+      ]
+    },
+    {
+      "id": "verdict-na-unknown",
+      "part": "verdict",
+      "severity": "info",
+      "detection": "deterministic",
+      "check": "verdict.scale == binary-na-unknown o regla NA declarada",
+      "appliesIf": {},
+      "statement": {
+        "es": "La escala separa 'no aplica' y 'no se puede juzgar' de 'falla'.",
+        "en": "The scale separates 'not applicable' and 'cannot judge' from 'fail'."
+      },
+      "rationale": {
+        "es": "Sin esa separación, un caso imposible de juzgar cuenta como fallo o como acierto por error.",
+        "en": "Without that separation, an unjudgeable case counts wrongly as a fail or a pass."
+      },
+      "sources": [
+        "F-A2-10",
+        "F-A3-02"
+      ]
+    },
+    {
+      "id": "trials-when-variable",
+      "part": "trials",
+      "severity": "warn",
+      "detection": "deterministic",
+      "check": "trials.k >= 2 y trials.metric presente",
+      "appliesIf": {
+        "structure": [
+          "agent-outcome",
+          "agent-trajectory"
+        ]
+      },
+      "statement": {
+        "es": "Si la salida varía, corre varios intentos y declara k y la métrica (pass@k o pass^k).",
+        "en": "If output varies, run several trials and state k and the metric (pass@k or pass^k)."
+      },
+      "rationale": {
+        "es": "Con un intento, una diferencia puede ser suerte; 14 de 24 benchmarks no repiten corridas.",
+        "en": "With one trial, a difference can be luck; 14 of 24 benchmarks do not repeat runs."
+      },
+      "sources": [
+        "F-C1-01",
+        "F-C6-01",
+        "F-C4-06"
+      ]
+    },
+    {
+      "id": "aggregation-declared",
+      "part": "aggregation",
+      "severity": "error",
+      "detection": "deterministic",
+      "check": "aggregation.method presente",
+      "appliesIf": {},
+      "statement": {
+        "es": "Declara cómo se juntan los veredictos y cómo leer el puntaje.",
+        "en": "States how verdicts are combined and how to read the score."
+      },
+      "rationale": {
+        "es": "Sin métrica declarada, el número no se puede interpretar.",
+        "en": "Without a declared metric, the number cannot be interpreted."
+      },
+      "sources": [
+        "F-C6-01",
+        "F-C6-09",
+        "F-C1-08"
+      ]
+    },
+    {
+      "id": "uncertainty-reported",
+      "part": "aggregation",
+      "severity": "warn",
+      "detection": "deterministic",
+      "check": "aggregation.uncertainty != none",
+      "appliesIf": {},
+      "statement": {
+        "es": "Cada puntaje va con su error estándar o intervalo y el número de casos.",
+        "en": "Every score comes with its standard error or interval and the number of cases."
+      },
+      "rationale": {
+        "es": "Solo 16 % de 445 benchmarks usa estimaciones de incertidumbre o pruebas estadísticas.",
+        "en": "Only 16% of 445 benchmarks use uncertainty estimates or statistical tests."
+      },
+      "sources": [
+        "F-C6-03",
+        "F-C6-02",
+        "F-C4-06"
+      ]
+    },
+    {
+      "id": "composite-breakdown",
+      "part": "aggregation",
+      "severity": "info",
+      "detection": "deterministic",
+      "check": "si aggregation.method es compuesto, aggregation.breakdown incluye criterion",
+      "appliesIf": {},
+      "statement": {
+        "es": "Un puntaje compuesto muestra su desglose por criterio.",
+        "en": "A composite score shows its per-criterion breakdown."
+      },
+      "rationale": {
+        "es": "Un número único ponderado no dice qué mejoró para el usuario.",
+        "en": "A single weighted number does not say what improved for the user."
+      },
+      "sources": [
+        "F-C4-03"
+      ]
+    },
+    {
+      "id": "threshold-declared",
+      "part": "threshold",
+      "severity": "warn",
+      "detection": "deterministic",
+      "check": "threshold.per_case o threshold.overall presente",
+      "appliesIf": {
+        "purpose": [
+          "regression",
+          "comparison",
+          "risk-threshold"
+        ]
+      },
+      "statement": {
+        "es": "Declara el umbral de pasa/falla (por caso o global).",
+        "en": "States the pass/fail threshold (per case or overall)."
+      },
+      "rationale": {
+        "es": "Sin umbral el número se interpreta distinto cada vez y no hay decisión.",
+        "en": "Without a threshold the number is read differently each time and there is no decision."
+      },
+      "sources": [
+        "F-C4-07",
+        "F-C1-02",
+        "F-C1-03"
+      ]
+    },
+    {
+      "id": "regression-near-100",
+      "part": "threshold",
+      "severity": "info",
+      "detection": "deterministic",
+      "check": "threshold.overall >= 0.95",
+      "appliesIf": {
+        "purpose": [
+          "regression"
+        ]
+      },
+      "statement": {
+        "es": "Una eval de regresión exige cerca de 100 %.",
+        "en": "A regression eval requires close to 100%."
+      },
+      "rationale": {
+        "es": "Vigila lo que ya funcionaba; una caída es alarma.",
+        "en": "It guards what already worked; any drop is an alarm."
+      },
+      "sources": [
+        "F-C3-01"
+      ]
+    },
+    {
+      "id": "baseline-declared",
+      "part": "baseline",
+      "severity": "warn",
+      "detection": "deterministic",
+      "check": "baseline.kind presente",
+      "appliesIf": {},
+      "statement": {
+        "es": "Declara contra qué se compara el resultado (versión anterior, azar, humano).",
+        "en": "States what the result is compared against (previous version, chance, human)."
+      },
+      "rationale": {
+        "es": "Sin línea base no se sabe si un número es bueno.",
+        "en": "Without a baseline you cannot tell if a number is good."
+      },
+      "sources": [
+        "F-C6-01",
+        "F-C4-05",
+        "F-C4-06"
+      ]
+    },
+    {
+      "id": "control-metrics",
+      "part": "baseline",
+      "severity": "info",
+      "detection": "llm-judge",
+      "check": "hay métricas de control además de la principal",
+      "appliesIf": {},
+      "statement": {
+        "es": "Incluye métricas de control para no sobreoptimizar una sola.",
+        "en": "Includes control metrics to avoid over-optimizing a single one."
+      },
+      "rationale": {
+        "es": "Optimizar un solo número puede empeorar el resto (ley de Goodhart).",
+        "en": "Optimizing a single number can worsen the rest (Goodhart's law)."
+      },
+      "sources": [
+        "F-C4-08"
+      ]
+    },
+    {
+      "id": "judge-validated",
+      "part": "validation",
+      "severity": "warn",
+      "detection": "deterministic",
+      "check": "validation.judge_vs_human con n, tpr y tnr",
+      "appliesIf": {
+        "grader": [
+          "llm-judge"
+        ]
+      },
+      "statement": {
+        "es": "El juez LLM se validó contra etiquetas humanas y reporta TPR y TNR.",
+        "en": "The LLM judge was validated against human labels and reports TPR and TNR."
+      },
+      "rationale": {
+        "es": "Con más de 90 % de acuerdo la nota puede diferir más de 10 puntos; el juez de Shopify empezó con kappa 0,02.",
+        "en": "With over 90% agreement the score can differ by over 10 points; Shopify's judge started at kappa 0.02."
+      },
+      "sources": [
+        "F-C5-09",
+        "F-C4-04",
+        "F-C4-09",
+        "F-C7-07"
+      ]
+    },
+    {
+      "id": "judge-validation-split",
+      "part": "validation",
+      "severity": "info",
+      "detection": "deterministic",
+      "check": "validation.judge_vs_human.split == true",
+      "appliesIf": {
+        "grader": [
+          "llm-judge"
+        ]
+      },
+      "statement": {
+        "es": "La validación del juez usa conjuntos separados de desarrollo y prueba.",
+        "en": "Judge validation uses separate dev and test splits."
+      },
+      "rationale": {
+        "es": "Si se ajusta el prompt del juez con los mismos casos que lo prueban, el acuerdo se infla.",
+        "en": "Tuning the judge prompt on the same cases that test it inflates agreement."
+      },
+      "sources": [
+        "F-C4-03",
+        "F-C4-09"
+      ]
+    },
+    {
+      "id": "contamination-guard",
+      "part": "validation",
+      "severity": "info",
+      "detection": "deterministic",
+      "check": "validation.contamination con canary, heldout o test",
+      "appliesIf": {
+        "origin": [
+          "public-benchmark"
+        ]
+      },
+      "statement": {
+        "es": "Un benchmark público se protege contra contaminación (cadena canario, casos ocultos o prueba).",
+        "en": "A public benchmark guards against contamination (canary string, held-out cases or a test)."
+      },
+      "rationale": {
+        "es": "Si los casos se filtran al entrenamiento, el puntaje sube sin que el modelo mejore.",
+        "en": "If cases leak into training, scores rise without the model improving."
+      },
+      "sources": [
+        "F-C6-05",
+        "F-C6-02"
+      ]
+    },
+    {
+      "id": "version-history",
+      "part": "metadata",
+      "severity": "warn",
+      "detection": "deterministic",
+      "check": "version presente y history con al menos 1 entrada con fecha",
+      "appliesIf": {},
+      "statement": {
+        "es": "La eval tiene versión e historial de cambios con fechas.",
+        "en": "The eval has a version and dated change history."
+      },
+      "rationale": {
+        "es": "Los criterios cambian al calificar (deriva de criterios); sin historial no se comparan corridas.",
+        "en": "Criteria drift while grading; without history runs cannot be compared."
+      },
+      "sources": [
+        "F-C4-04",
+        "F-C6-09",
+        "F-C6-01"
+      ]
+    },
+    {
+      "id": "owner-named",
+      "part": "metadata",
+      "severity": "warn",
+      "detection": "deterministic",
+      "check": "owner presente",
+      "appliesIf": {},
+      "statement": {
+        "es": "Nombra a un dueño que decide qué es 'bueno'.",
+        "en": "Names an owner who decides what 'good' means."
+      },
+      "rationale": {
+        "es": "Un experto responsable evita criterios de comité y mantiene la eval.",
+        "en": "A responsible expert avoids committee criteria and maintains the eval."
+      },
+      "sources": [
+        "F-C4-03",
+        "F-C4-09"
+      ]
+    },
+    {
+      "id": "run-frequency",
+      "part": "metadata",
+      "severity": "info",
+      "detection": "deterministic",
+      "check": "run.frequency presente",
+      "appliesIf": {},
+      "statement": {
+        "es": "Declara cuándo corre (cada cambio, diaria, antes de lanzar).",
+        "en": "States when it runs (every change, daily, pre-release)."
+      },
+      "rationale": {
+        "es": "Los equipos corren lo barato en cada cambio y lo caro con menos frecuencia.",
+        "en": "Teams run cheap checks on every change and expensive ones less often."
+      },
+      "sources": [
+        "F-C4-01",
+        "F-C7-01",
+        "F-C7-02"
+      ]
+    },
+    {
+      "id": "maintenance-plan",
+      "part": "metadata",
+      "severity": "info",
+      "detection": "llm-judge",
+      "check": "maintenance.review_every o maintenance.retire_when",
+      "appliesIf": {},
+      "statement": {
+        "es": "Dice cuándo se revisa y cuándo se retira (saturación).",
+        "en": "States when it is reviewed and when it is retired (saturation)."
+      },
+      "rationale": {
+        "es": "Una eval saturada ya no separa sistemas; 29 de 60 benchmarks estudiados tienen saturación alta.",
+        "en": "A saturated eval no longer separates systems; 29 of 60 studied benchmarks are highly saturated."
+      },
+      "sources": [
+        "F-C6-06",
+        "F-C4-03"
+      ]
+    },
+    {
+      "id": "identity-minimum",
+      "part": "documentation",
+      "severity": "error",
+      "detection": "deterministic",
+      "check": "name, summary, authors y created presentes",
+      "appliesIf": {},
+      "statement": {
+        "es": "Tiene nombre, descripción, autoría y fecha.",
+        "en": "Has a name, description, authors and date."
+      },
+      "rationale": {
+        "es": "Son los campos mínimos de una ficha técnica de eval.",
+        "en": "These are the minimum fields of an eval card."
+      },
+      "sources": [
+        "F-C6-10"
+      ]
+    },
+    {
+      "id": "license-declared",
+      "part": "documentation",
+      "severity": "error",
+      "detection": "deterministic",
+      "check": "license presente",
+      "appliesIf": {
+        "catalog": true
+      },
+      "statement": {
+        "es": "Declara licencia.",
+        "en": "Declares a license."
+      },
+      "rationale": {
+        "es": "Sin licencia nadie puede reusar la eval con seguridad.",
+        "en": "Without a license no one can safely reuse the eval."
+      },
+      "sources": [
+        "F-C6-01",
+        "F-C6-08"
+      ]
+    },
+    {
+      "id": "protocol-repeatable",
+      "part": "documentation",
+      "severity": "error",
+      "detection": "deterministic",
+      "check": "cuerpo con sección de cómo correrla o run.command presente",
+      "appliesIf": {},
+      "statement": {
+        "es": "Describe paso a paso cómo correrla.",
+        "en": "Describes step by step how to run it."
+      },
+      "rationale": {
+        "es": "Sin protocolo no se puede repetir.",
+        "en": "Without a protocol it cannot be repeated."
+      },
+      "sources": [
+        "F-C6-10",
+        "F-C6-04"
+      ]
+    },
+    {
+      "id": "contact-declared",
+      "part": "documentation",
+      "severity": "warn",
+      "detection": "deterministic",
+      "check": "contact presente",
+      "appliesIf": {},
+      "statement": {
+        "es": "Da un contacto o canal para reportar errores.",
+        "en": "Gives a contact or channel to report errors."
+      },
+      "rationale": {
+        "es": "Las evals públicas necesitan fe de erratas.",
+        "en": "Public evals need errata."
+      },
+      "sources": [
+        "F-C6-01",
+        "F-C6-08"
+      ]
+    },
+    {
+      "id": "limitations-listed",
+      "part": "documentation",
+      "severity": "warn",
+      "detection": "llm-judge",
+      "check": "limitations con al menos 1 elemento concreto",
+      "appliesIf": {},
+      "statement": {
+        "es": "Lista limitaciones y usos fuera de alcance.",
+        "en": "Lists limitations and out-of-scope uses."
+      },
+      "rationale": {
+        "es": "Dice lo que la eval no permite concluir.",
+        "en": "It says what the eval does not let you conclude."
+      },
+      "sources": [
+        "F-C6-01",
+        "F-C6-09"
+      ]
+    },
+    {
+      "id": "sensitive-data-declared",
+      "part": "documentation",
+      "severity": "warn",
+      "detection": "deterministic",
+      "check": "sensitive_data presente",
+      "appliesIf": {},
+      "statement": {
+        "es": "Declara si los casos tienen datos de personas u ofensivos.",
+        "en": "States whether cases contain personal or offensive data."
+      },
+      "rationale": {
+        "es": "Las hojas de datos lo piden para proteger a las personas.",
+        "en": "Datasheets ask for it to protect people."
+      },
+      "sources": [
+        "F-C6-08"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+# Fixture C2 · eval de ejemplo común: "¿El asistente de soporte responde sin inventar políticas?"
+# Formato: task YAML de EleutherAI lm-evaluation-harness (v0.4+).
+# Doc seguida (consultada 2026-10-02):
+#   https://github.com/EleutherAI/lm-evaluation-harness/blob/main/docs/task_guide.md
+#   https://github.com/EleutherAI/lm-evaluation-harness/blob/main/docs/new_task_guide.md
+# Datos: lm-eval-soporte.jsonl (campos: politica, pregunta, etiqueta).
+# Correr: lm_eval --model hf --model_args pretrained=<modelo> --include_path . --tasks soporte_politicas --log_samples --output_path resultados/
+#
+# Adaptación honesta: la guía de tareas no lista un juez LLM entre sus métricas nativas.
+# Por eso el criterio "no inventa políticas" se vuelve una etiqueta final verificable por código:
+# el modelo responde y cierra con "Respuesta corta: SÍ | NO | NO CUBIERTO".
+# En el caso de igualación de precio, inventar una política da una etiqueta distinta de "NO CUBIERTO".
+
+task: soporte_politicas
+task_alias: "Soporte sin políticas inventadas"
+dataset_path: json
+dataset_kwargs:
+  data_files: lm-eval-soporte.jsonl   # usa ruta absoluta si corres desde otra carpeta
+test_split: train                     # con un solo archivo JSON, Hugging Face lo carga como split "train"
+output_type: generate_until
+num_fewshot: 0
+description: "Eres el asistente de soporte de Tienda Ejemplo. Responde solo con base en la política dada. Si la política no cubre la pregunta, dilo y ofrece pasar con una persona. Termina con una línea 'Respuesta corta: SÍ', 'Respuesta corta: NO' o 'Respuesta corta: NO CUBIERTO'.\n\n"
+doc_to_text: "Política: {{politica}}\nPregunta del cliente: {{pregunta}}\nRespuesta:"
+doc_to_target: "{{etiqueta}}"
+generation_kwargs:
+  until:
+    - "\n\n\n"
+  do_sample: false
+repeats: 1
+filter_list:
+  - name: etiqueta-final
+    filter:
+      - function: regex
+        regex_pattern: "Respuesta corta: (SÍ|NO CUBIERTO|NO)"
+      - function: take_first
+metric_list:
+  - metric: exact_match
+    aggregation: mean
+    higher_is_better: true
+    ignore_case: true
+    ignore_punctuation: true
+metadata:
+  version: 1.0

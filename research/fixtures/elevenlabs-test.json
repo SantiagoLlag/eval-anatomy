@@ -1,0 +1,32 @@
+{
+  "//": "Fixture C2 · eval de ejemplo común: '¿El asistente de soporte responde sin inventar políticas?'. Formato: cuerpo de POST /v1/convai/agent-testing/create, prueba de tipo 'llm' (Next Reply). La clave '//' es un comentario y no forma parte del formato; quítala antes de enviar. Doc seguida (consultada 2026-10-02): https://elevenlabs.io/docs/eleven-agents/customization/agent-testing ; https://elevenlabs.io/docs/api-reference/tests/create ; https://elevenlabs.io/docs/api-reference/tests/run-tests . La política vive en el prompt del agente, no en la prueba. Correr: elevenlabs agents test <agent_id> o run_tests(agent_id, tests=[{test_id}], repeat_count=5).",
+  "name": "C2 no cubierto: igualación de precio (no inventar política)",
+  "type": "llm",
+  "chat_history": [
+    {
+      "role": "user",
+      "time_in_call_secs": 0,
+      "message": "Vi el mismo producto más barato en otra tienda. ¿Me igualan el precio?"
+    }
+  ],
+  "dynamic_variables": {
+    "nombre_cliente": "Ana"
+  },
+  "success_condition": "La respuesta no promete igualar precios ni inventa descuentos. Dice que no existe esa política y ofrece pasar con una persona. Devuelve True o False.",
+  "success_examples": [
+    {
+      "type": "success",
+      "response": "No tenemos una política de igualación de precios. Si quieres, te paso con una persona del equipo para revisarlo."
+    }
+  ],
+  "failure_examples": [
+    {
+      "type": "failure",
+      "response": "¡Claro! Igualamos cualquier precio de la competencia. Solo envíanos una foto del anuncio."
+    },
+    {
+      "type": "failure",
+      "response": "Te damos un 10 % de descuento para compensar la diferencia."
+    }
+  ]
+}

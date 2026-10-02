@@ -1,0 +1,1293 @@
+{
+  "generated": "2026-10-02",
+  "generator": "scripts/generate_content.py — regenerate, never hand-edit",
+  "version": "1.0.0",
+  "runningExample": {
+    "es": "Asistente de soporte de Tienda Ejemplo. La eval revisa que responda sin inventar políticas: su política tiene 3 reglas (devolución en 30 días con ticket, envío pagado por el cliente, reembolso en 5 a 10 días hábiles).",
+    "en": "Support assistant for Example Store. The eval checks that it answers without inventing policies: its policy has 3 rules (returns within 30 days with receipt, customer pays return shipping, refund in 5 to 10 business days)."
+  },
+  "groups": [
+    {
+      "id": "intent",
+      "name": {
+        "es": "Intención",
+        "en": "Intent"
+      },
+      "question": {
+        "es": "¿Para qué existe esta eval?",
+        "en": "Why does this eval exist?"
+      }
+    },
+    {
+      "id": "inputs",
+      "name": {
+        "es": "Qué se prueba",
+        "en": "What is tested"
+      },
+      "question": {
+        "es": "¿Con qué casos y sobre qué sistema?",
+        "en": "With which cases, on which system?"
+      }
+    },
+    {
+      "id": "judgment",
+      "name": {
+        "es": "Cómo se juzga",
+        "en": "How it is judged"
+      },
+      "question": {
+        "es": "¿Quién decide si cada salida pasa y con qué regla?",
+        "en": "Who decides whether each output passes, and by what rule?"
+      }
+    },
+    {
+      "id": "conclusion",
+      "name": {
+        "es": "Qué se concluye",
+        "en": "What is concluded"
+      },
+      "question": {
+        "es": "¿Cómo se vuelven los veredictos un resultado y una decisión?",
+        "en": "How do verdicts become a result and a decision?"
+      }
+    },
+    {
+      "id": "governance",
+      "name": {
+        "es": "Cómo se cuida",
+        "en": "How it is maintained"
+      },
+      "question": {
+        "es": "¿Cómo sabemos que la eval sigue midiendo bien?",
+        "en": "How do we know the eval still measures well?"
+      }
+    }
+  ],
+  "parts": [
+    {
+      "id": "purpose",
+      "group": "intent",
+      "level": "required",
+      "levelNote": {
+        "es": "Las guías de proceso lo piden primero; casi ninguna herramienta tiene un campo para él.",
+        "en": "Process guides ask for it first; almost no tool has a field for it."
+      },
+      "condition": null,
+      "name": {
+        "es": "Propósito y criterio de éxito",
+        "en": "Purpose and success criterion"
+      },
+      "oneLine": {
+        "es": "Qué pregunta responde la eval, qué mide de forma observable y qué decisión permite tomar.",
+        "en": "What question the eval answers, what it measures observably, and what decision it enables."
+      },
+      "explanation": {
+        "es": "El propósito dice qué se quiere saber. El constructo es la definición observable de lo que se mide. El criterio de éxito dice qué resultado cuenta como bueno.",
+        "en": "The purpose says what we want to know. The construct is the observable definition of what is measured. The success criterion says which result counts as good."
+      },
+      "whyItMatters": {
+        "es": "Sin propósito no se puede saber si la eval mide lo correcto. Muchos benchmarks no definen bien lo que miden.",
+        "en": "Without a purpose you cannot tell whether the eval measures the right thing. Many benchmarks do not define what they measure."
+      },
+      "bestPractices": {
+        "es": [
+          "Escribe el propósito como una pregunta de sí o no sobre el producto.",
+          "Define lo que mides con algo que se pueda observar, no con una palabra vaga.",
+          "Di qué queda fuera del alcance.",
+          "Nace de un fallo real observado, no de uno imaginado."
+        ],
+        "en": [
+          "Write the purpose as a yes/no question about the product.",
+          "Define what you measure with something observable, not a vague word.",
+          "State what is out of scope.",
+          "Start from a real observed failure, not an imagined one."
+        ]
+      },
+      "commonMistakes": {
+        "es": [
+          "Usar 'calidad' o 'utilidad' sin definir.",
+          "Escribir evals para fallos que nunca ocurren."
+        ],
+        "en": [
+          "Using 'quality' or 'helpfulness' without a definition.",
+          "Writing evals for failures that never happen."
+        ]
+      },
+      "example": {
+        "es": "¿El asistente responde sin afirmar políticas que no están en la política oficial? Decide si la versión nueva del prompt puede salir.",
+        "en": "Does the assistant answer without stating policies that are not in the official policy? Decides whether the new prompt version can ship."
+      },
+      "synonyms": [
+        "purpose",
+        "objective",
+        "success criteria",
+        "construct",
+        "description"
+      ],
+      "sources": [
+        "F-C1-02",
+        "F-C1-04",
+        "F-C4-03",
+        "F-C4-07",
+        "F-C6-01",
+        "F-C6-02",
+        "F-C6-10"
+      ]
+    },
+    {
+      "id": "cases",
+      "group": "inputs",
+      "level": "required",
+      "levelNote": {
+        "es": "Las 10 fuentes de C1 lo tienen. En una eval en producción el conjunto fijo se cambia por una muestra del tráfico.",
+        "en": "All 10 C1 sources have it. In a production eval the fixed set is replaced by a sample of traffic."
+      },
+      "condition": null,
+      "name": {
+        "es": "Casos de prueba",
+        "en": "Test cases"
+      },
+      "oneLine": {
+        "es": "El conjunto de entradas que recibe el sistema; cada caso es una situación concreta.",
+        "en": "The set of inputs the system receives; each case is a concrete situation."
+      },
+      "explanation": {
+        "es": "Un caso tiene la entrada y, a veces, su referencia y etiquetas. Los casos pueden ser reales, sintéticos, escritos por expertos o adversariales. Conviene marcar los típicos, los bordes y los que buscan romper.",
+        "en": "A case holds the input and sometimes its reference and labels. Cases can be real, synthetic, expert-written or adversarial. Tag typical, edge and adversarial cases."
+      },
+      "whyItMatters": {
+        "es": "El puntaje solo predice lo que verán los usuarios si los casos se parecen al tráfico real.",
+        "en": "The score only predicts what users will see if the cases resemble real traffic."
+      },
+      "bestPractices": {
+        "es": [
+          "Empieza con casos sacados de fallos reales; 20 a 50 bastan para arrancar.",
+          "Si generas casos sintéticos, declara las dimensiones que combinas.",
+          "Declara de dónde salieron los casos y cuándo se juntaron.",
+          "Suma cada fallo nuevo de producción al conjunto."
+        ],
+        "en": [
+          "Start with cases taken from real failures; 20 to 50 are enough to begin.",
+          "If you generate synthetic cases, declare the dimensions you combine.",
+          "State where the cases came from and when they were collected.",
+          "Add every new production failure to the set."
+        ]
+      },
+      "commonMistakes": {
+        "es": [
+          "Casos que no se parecen a producción.",
+          "Sintéticos sin estructura: salen genéricos y repetidos."
+        ],
+        "en": [
+          "Cases that do not resemble production.",
+          "Unstructured synthetic data: generic and repetitive."
+        ]
+      },
+      "example": {
+        "es": "Caso cubierto: 'Compré zapatos hace 20 días, ¿los puedo devolver?'. Caso trampa: '¿Me igualan el precio de otra tienda?' (la política no lo cubre).",
+        "en": "Covered case: 'I bought shoes 20 days ago, can I return them?'. Trap case: 'Will you match another store's price?' (the policy does not cover it)."
+      },
+      "synonyms": [
+        "dataset",
+        "test case",
+        "sample",
+        "example",
+        "item",
+        "instance",
+        "task (Anthropic)",
+        "tests (promptfoo)"
+      ],
+      "sources": [
+        "F-C1-01",
+        "F-C1-08",
+        "F-C1-10",
+        "F-C3-05",
+        "F-C4-02",
+        "F-C4-03",
+        "F-C4-10",
+        "F-C6-05",
+        "F-C6-08"
+      ]
+    },
+    {
+      "id": "reference",
+      "group": "inputs",
+      "level": "conditional",
+      "levelNote": null,
+      "condition": {
+        "es": "Solo si el calificador compara contra una respuesta esperada.",
+        "en": "Only if the grader compares against an expected answer."
+      },
+      "name": {
+        "es": "Referencia",
+        "en": "Reference"
+      },
+      "oneLine": {
+        "es": "La respuesta esperada (respuesta de oro) o la solución que prueba que el caso tiene solución.",
+        "en": "The expected answer (golden answer) or the solution that proves the case is solvable."
+      },
+      "explanation": {
+        "es": "Tiene dos papeles: respuesta contra la que se compara, o solución de referencia que demuestra que la tarea se puede resolver. La referencia solo la ve el calificador, nunca el sistema bajo prueba.",
+        "en": "It plays two roles: an answer to compare against, or a reference solution showing the task is solvable. Only the grader sees the reference, never the system under test."
+      },
+      "whyItMatters": {
+        "es": "Dar la referencia al juez mejora su acuerdo con humanos. Si el sistema la ve, la eval queda inválida.",
+        "en": "Giving the reference to the judge improves its agreement with humans. If the system sees it, the eval is invalid."
+      },
+      "bestPractices": {
+        "es": [
+          "Declara quién produjo la referencia.",
+          "Si la escribió un LLM, que la revise una persona.",
+          "Nunca la pases al sistema bajo prueba."
+        ],
+        "en": [
+          "State who produced the reference.",
+          "If an LLM wrote it, have a person review it.",
+          "Never pass it to the system under test."
+        ]
+      },
+      "commonMistakes": {
+        "es": [
+          "Referencias generadas por LLM sin revisión: heredan sus sesgos."
+        ],
+        "en": [
+          "LLM-generated references without review: they inherit its biases."
+        ]
+      },
+      "example": {
+        "es": "Para el caso trampa, la referencia es: 'La política no cubre igualación de precios; ofrece pasar con una persona'.",
+        "en": "For the trap case, the reference is: 'The policy does not cover price matching; offer to hand off to a person'."
+      },
+      "synonyms": [
+        "golden answer",
+        "ground truth",
+        "target",
+        "ideal",
+        "expected output",
+        "reference solution",
+        "reference_outputs"
+      ],
+      "sources": [
+        "F-C1-01",
+        "F-C1-02",
+        "F-C1-07",
+        "F-C1-08",
+        "F-C1-10",
+        "F-C5-01",
+        "F-C5-03",
+        "F-C4-02",
+        "F-C4-09",
+        "F-C6-10"
+      ]
+    },
+    {
+      "id": "system",
+      "group": "inputs",
+      "level": "required",
+      "levelNote": null,
+      "condition": null,
+      "name": {
+        "es": "Sistema bajo prueba y configuración",
+        "en": "System under test and configuration"
+      },
+      "oneLine": {
+        "es": "Lo que se evalúa (modelo, prompt, agente o app) con la configuración exacta que se usó.",
+        "en": "What is evaluated (model, prompt, agent or app) with the exact configuration used."
+      },
+      "explanation": {
+        "es": "La configuración incluye el modelo, la plantilla del prompt, los ejemplos en contexto y los parámetros como la temperatura. HELM llama a esto adaptación.",
+        "en": "Configuration includes the model, the prompt template, in-context examples and parameters such as temperature. HELM calls this adaptation."
+      },
+      "whyItMatters": {
+        "es": "En HELM, cambiar solo cómo se arma el prompt movió un resultado de 79,1 % a 30,2 %. Sin la configuración exacta nadie puede repetir la eval.",
+        "en": "In HELM, changing only how the prompt is built moved a result from 79.1% to 30.2%. Without the exact configuration no one can repeat the eval."
+      },
+      "bestPractices": {
+        "es": [
+          "Publica el prompt exacto y los parámetros.",
+          "Si comparas modelos, prueba más de una redacción del prompt.",
+          "Registra la versión del modelo y del prompt en cada corrida."
+        ],
+        "en": [
+          "Publish the exact prompt and parameters.",
+          "If you compare models, test more than one prompt wording.",
+          "Record the model and prompt version in every run."
+        ]
+      },
+      "commonMistakes": {
+        "es": [
+          "Una sola redacción del prompt al comparar modelos: el orden de los modelos cambia con la redacción."
+        ],
+        "en": [
+          "A single prompt wording when comparing models: model rankings change with wording."
+        ]
+      },
+      "example": {
+        "es": "Prompt 'soporte-v1' con la política pegada, modelo elegido por el equipo, temperatura 0.",
+        "en": "Prompt 'support-v1' with the policy pasted in, model chosen by the team, temperature 0."
+      },
+      "synonyms": [
+        "model",
+        "provider",
+        "solver",
+        "task (Braintrust)",
+        "target",
+        "adaptation",
+        "application"
+      ],
+      "sources": [
+        "F-C1-01",
+        "F-C1-07",
+        "F-C1-08",
+        "F-C6-04",
+        "F-C6-01"
+      ]
+    },
+    {
+      "id": "environment",
+      "group": "inputs",
+      "level": "conditional",
+      "levelNote": null,
+      "condition": {
+        "es": "En evals de agentes que usan herramientas o cambian un estado.",
+        "en": "In agent evals that use tools or change state."
+      },
+      "name": {
+        "es": "Entorno",
+        "en": "Environment"
+      },
+      "oneLine": {
+        "es": "El mundo donde actúa un agente: archivos, bases de datos, APIs simuladas o un usuario simulado.",
+        "en": "The world an agent acts in: files, databases, simulated APIs or a simulated user."
+      },
+      "explanation": {
+        "es": "En una eval de agente, el resultado es el estado final del entorno, no solo un texto. Cada intento debe empezar con el entorno limpio.",
+        "en": "In an agent eval, the result is the final state of the environment, not just text. Every trial must start from a clean environment."
+      },
+      "whyItMatters": {
+        "es": "Si un intento deja rastros, el siguiente se contamina y el puntaje miente.",
+        "en": "If a trial leaves traces, the next one is contaminated and the score lies."
+      },
+      "bestPractices": {
+        "es": [
+          "Reinicia el entorno en cada intento.",
+          "Declara si hay un usuario simulado y cómo se comporta."
+        ],
+        "en": [
+          "Reset the environment on every trial.",
+          "State whether there is a simulated user and how it behaves."
+        ]
+      },
+      "commonMistakes": {
+        "es": [
+          "Compartir estado entre intentos."
+        ],
+        "en": [
+          "Sharing state across trials."
+        ]
+      },
+      "example": {
+        "es": "Si el asistente pudiera crear devoluciones, el entorno sería una base de pedidos de prueba que se reinicia en cada intento.",
+        "en": "If the assistant could create returns, the environment would be a test order database reset on every trial."
+      },
+      "synonyms": [
+        "sandbox",
+        "harness",
+        "environment",
+        "simulated user",
+        "simulation"
+      ],
+      "sources": [
+        "F-C1-01",
+        "F-C1-08",
+        "F-C3-01",
+        "F-C3-08"
+      ]
+    },
+    {
+      "id": "output",
+      "group": "judgment",
+      "level": "required",
+      "levelNote": null,
+      "condition": null,
+      "name": {
+        "es": "Salida y transcripción",
+        "en": "Output and transcript"
+      },
+      "oneLine": {
+        "es": "Lo que el sistema devuelve en cada caso; en agentes, también los pasos que siguió.",
+        "en": "What the system returns for each case; for agents, also the steps it took."
+      },
+      "explanation": {
+        "es": "La salida puede ser texto, JSON, llamadas a herramientas o un estado final. La transcripción (traza) registra cada paso. Se puede calificar la salida final, el estado final o el camino.",
+        "en": "The output can be text, JSON, tool calls or a final state. The transcript (trace) records every step. You can grade the final output, the final state or the path."
+      },
+      "whyItMatters": {
+        "es": "Leer transcripciones a mano es como se descubren los fallos que ninguna métrica ve.",
+        "en": "Reading transcripts by hand is how you find failures no metric catches."
+      },
+      "bestPractices": {
+        "es": [
+          "Guarda la salida cruda de cada caso.",
+          "En agentes, guarda la transcripción completa.",
+          "Lee transcripciones con regularidad."
+        ],
+        "en": [
+          "Keep the raw output for every case.",
+          "For agents, keep the full transcript.",
+          "Read transcripts regularly."
+        ]
+      },
+      "commonMistakes": {
+        "es": [
+          "Registrar todo pero nunca evaluarlo: casi todos guardan trazas, solo la mitad corre evals."
+        ],
+        "en": [
+          "Logging everything but never evaluating it: almost everyone keeps traces, only half run evals."
+        ]
+      },
+      "example": {
+        "es": "Salida mala: 'Sí, igualamos precios con un 10 % extra'. Salida buena: 'Nuestra política no cubre eso; te paso con una persona'.",
+        "en": "Bad output: 'Yes, we match prices plus 10%'. Good output: 'Our policy does not cover that; let me hand you to a person'."
+      },
+      "synonyms": [
+        "output",
+        "completion",
+        "response",
+        "transcript",
+        "trace",
+        "trajectory",
+        "outcome"
+      ],
+      "sources": [
+        "F-C1-01",
+        "F-C1-06",
+        "F-C1-10",
+        "F-C3-01",
+        "F-C4-02",
+        "F-C7-10"
+      ]
+    },
+    {
+      "id": "criteria",
+      "group": "judgment",
+      "level": "required",
+      "levelNote": {
+        "es": "El criterio es obligatorio; la rúbrica escrita es obligatoria cuando juzga un LLM o una persona.",
+        "en": "The criterion is required; a written rubric is required when an LLM or a person judges."
+      },
+      "condition": null,
+      "name": {
+        "es": "Criterios y rúbrica",
+        "en": "Criteria and rubric"
+      },
+      "oneLine": {
+        "es": "Qué cuenta como bien hecho, escrito como preguntas que se responden con sí o no.",
+        "en": "What counts as done right, written as questions answered yes or no."
+      },
+      "explanation": {
+        "es": "Cada criterio mide un solo modo de fallo. La rúbrica es la versión escrita para un juez: describe qué hace pasar y qué hace fallar, con ejemplos.",
+        "en": "Each criterion measures a single failure mode. The rubric is the written version for a judge: it says what passes and what fails, with examples."
+      },
+      "whyItMatters": {
+        "es": "Los criterios vagos dan notas que no siguen los fallos del producto. Los criterios cambian al calificar, así que necesitan historial.",
+        "en": "Vague criteria give scores that do not track product failures. Criteria drift while grading, so they need a history."
+      },
+      "bestPractices": {
+        "es": [
+          "Un criterio, un modo de fallo.",
+          "Pon un ejemplo de pasa y uno de falla por criterio.",
+          "Si el criterio es objetivo, que lo revise código.",
+          "Versiona la rúbrica: cambiará al ver datos."
+        ],
+        "en": [
+          "One criterion, one failure mode.",
+          "Give one pass and one fail example per criterion.",
+          "If the criterion is objective, let code check it.",
+          "Version the rubric: it will change once you see data."
+        ]
+      },
+      "commonMistakes": {
+        "es": [
+          "Métricas genéricas (utilidad, coherencia) como medida de calidad.",
+          "Un juez que revisa todo a la vez."
+        ],
+        "en": [
+          "Generic metrics (helpfulness, coherence) as the quality measure.",
+          "A judge that checks everything at once."
+        ]
+      },
+      "example": {
+        "es": "Criterio 1: ¿afirma solo políticas que están en la política? Criterio 2: si no está cubierto, ¿lo dice y ofrece pasar con una persona?",
+        "en": "Criterion 1: does it state only policies that are in the policy? Criterion 2: if not covered, does it say so and offer a human handoff?"
+      },
+      "synonyms": [
+        "criteria",
+        "rubric",
+        "assertion",
+        "assert",
+        "metric (some tools)",
+        "testing_criteria",
+        "success criteria"
+      ],
+      "sources": [
+        "F-C1-02",
+        "F-C1-04",
+        "F-C4-02",
+        "F-C4-03",
+        "F-C4-04",
+        "F-C4-07",
+        "F-C5-06",
+        "F-C5-07"
+      ]
+    },
+    {
+      "id": "grader",
+      "group": "judgment",
+      "level": "required",
+      "levelNote": null,
+      "condition": null,
+      "name": {
+        "es": "Calificador",
+        "en": "Grader"
+      },
+      "oneLine": {
+        "es": "Quién o qué decide si una salida cumple el criterio: código, similitud, juez LLM, persona o señal de usuarios.",
+        "en": "Who or what decides whether an output meets the criterion: code, similarity, LLM judge, person or user signal."
+      },
+      "explanation": {
+        "es": "El código es barato y repetible. El juez LLM sirve para criterios de matiz, pero tiene sesgos medidos. La persona es la más cara y sirve para fijar la verdad y validar al juez.",
+        "en": "Code is cheap and repeatable. An LLM judge handles nuanced criteria but has measured biases. A person is the most expensive and sets the ground truth and validates the judge."
+      },
+      "whyItMatters": {
+        "es": "El calificador decide el costo, la velocidad y el tipo de error de toda la eval.",
+        "en": "The grader sets the cost, speed and error type of the whole eval."
+      },
+      "bestPractices": {
+        "es": [
+          "Código primero; juez LLM solo donde el código no alcanza.",
+          "Un juez por criterio, no uno para todo.",
+          "El juez da su razón y luego el veredicto, en formato legible por programa.",
+          "Usa un modelo juez distinto del que genera, o registra cuál es cada uno.",
+          "En comparaciones por pares, corre los dos órdenes."
+        ],
+        "en": [
+          "Code first; LLM judge only where code falls short.",
+          "One judge per criterion, not one for everything.",
+          "The judge gives its reason, then the verdict, in a machine-readable format.",
+          "Use a judge model different from the generator, or record which is which.",
+          "In pairwise comparisons, run both orders."
+        ]
+      },
+      "commonMistakes": {
+        "es": [
+          "Juez sin validar contra personas.",
+          "Confiar en métricas de similitud (ROUGE, BLEU) para texto abierto."
+        ],
+        "en": [
+          "A judge never validated against people.",
+          "Trusting similarity metrics (ROUGE, BLEU) for open-ended text."
+        ]
+      },
+      "example": {
+        "es": "Criterio 2 con código: ¿la respuesta contiene la frase de traspaso? Criterio 1 con juez LLM que recibe la política, la pregunta y la respuesta.",
+        "en": "Criterion 2 with code: does the answer contain the handoff phrase? Criterion 1 with an LLM judge given the policy, question and answer."
+      },
+      "synonyms": [
+        "grader",
+        "scorer",
+        "evaluator",
+        "judge",
+        "metric (HELM, lm-eval)",
+        "assert"
+      ],
+      "sources": [
+        "F-C1-01",
+        "F-C1-02",
+        "F-C3-01",
+        "F-C4-03",
+        "F-C4-07",
+        "F-C5-01",
+        "F-C5-02",
+        "F-C5-05",
+        "F-C5-08",
+        "F-C5-10"
+      ]
+    },
+    {
+      "id": "verdict",
+      "group": "judgment",
+      "level": "required",
+      "levelNote": null,
+      "condition": null,
+      "name": {
+        "es": "Escala y veredicto",
+        "en": "Scale and verdict"
+      },
+      "oneLine": {
+        "es": "La forma de la respuesta del calificador por caso: pasa/falla, nota con anclas, o A/B/empate.",
+        "en": "The shape of the grader's answer per case: pass/fail, anchored score, or A/B/tie."
+      },
+      "explanation": {
+        "es": "Lo más fiable es un veredicto binario con su razón. Si usas una escala de 1 a 5, cada nivel necesita una descripción (ancla) y un corte de pasa/falla. Conviene separar 'no aplica' y 'no se puede juzgar' de 'falla'.",
+        "en": "The most reliable form is a binary verdict with its reason. If you use a 1–5 scale, each level needs a description (anchor) and a pass/fail cut. Keep 'not applicable' and 'cannot judge' separate from 'fail'."
+      },
+      "whyItMatters": {
+        "es": "Con 12 jueces, el acuerdo sube de α 0,09 con escala 1-5 a α 0,48 con listas de sí/no.",
+        "en": "Across 12 judges, agreement rises from α 0.09 with a 1–5 scale to α 0.48 with yes/no checklists."
+      },
+      "bestPractices": {
+        "es": [
+          "Veredicto binario con razón escrita.",
+          "Si hay escala, anclas por nivel y corte de pasa/falla.",
+          "Separa 'no aplica' y 'desconocido' de 'falla'."
+        ],
+        "en": [
+          "Binary verdict with a written reason.",
+          "If you use a scale, anchors per level and a pass/fail cut.",
+          "Keep 'not applicable' and 'unknown' apart from 'fail'."
+        ]
+      },
+      "commonMistakes": {
+        "es": [
+          "Escala 1-5 sin anclas: los jueces se van al centro."
+        ],
+        "en": [
+          "A 1–5 scale without anchors: judges drift to the middle."
+        ]
+      },
+      "example": {
+        "es": "Caso trampa → FALLA, razón: 'promete igualar precios, cosa que la política no dice'.",
+        "en": "Trap case → FAIL, reason: 'promises price matching, which the policy does not state'."
+      },
+      "synonyms": [
+        "score",
+        "verdict",
+        "label",
+        "pass/fail",
+        "C/I/P/N",
+        "success/failure/unknown"
+      ],
+      "sources": [
+        "F-C4-02",
+        "F-C4-03",
+        "F-C4-09",
+        "F-C5-03",
+        "F-C5-06",
+        "F-C5-07"
+      ]
+    },
+    {
+      "id": "trials",
+      "group": "conclusion",
+      "level": "recommended",
+      "levelNote": null,
+      "condition": {
+        "es": "Cuando la salida varía entre corridas (temperatura mayor que 0, agentes).",
+        "en": "When output varies between runs (temperature above 0, agents)."
+      },
+      "name": {
+        "es": "Intentos repetidos",
+        "en": "Repeated trials"
+      },
+      "oneLine": {
+        "es": "Correr cada caso varias veces porque la misma entrada puede dar salidas distintas.",
+        "en": "Running each case several times because the same input can give different outputs."
+      },
+      "explanation": {
+        "es": "pass@k cuenta un caso como logrado si pasa al menos una vez en k intentos. pass^k exige que pase en los k. La primera mide capacidad; la segunda, confiabilidad.",
+        "en": "pass@k counts a case as solved if it passes at least once in k trials. pass^k requires it to pass in all k. The first measures capability; the second, reliability."
+      },
+      "whyItMatters": {
+        "es": "Con un solo intento, una diferencia entre versiones puede ser pura suerte.",
+        "en": "With a single trial, a difference between versions may be pure luck."
+      },
+      "bestPractices": {
+        "es": [
+          "Declara k y si reportas pass@k o pass^k.",
+          "Reporta la variación entre corridas."
+        ],
+        "en": [
+          "State k and whether you report pass@k or pass^k.",
+          "Report run-to-run variation."
+        ]
+      },
+      "commonMistakes": {
+        "es": [
+          "Una sola corrida para decidir un lanzamiento."
+        ],
+        "en": [
+          "A single run to decide a launch."
+        ]
+      },
+      "example": {
+        "es": "Cada pregunta trampa se corre 5 veces; el asistente debe pasar las 5 (pass^5).",
+        "en": "Each trap question runs 5 times; the assistant must pass all 5 (pass^5)."
+      },
+      "synonyms": [
+        "trials",
+        "epochs",
+        "repetitions",
+        "num_repetitions",
+        "k"
+      ],
+      "sources": [
+        "F-C1-01",
+        "F-C1-07",
+        "F-C1-08",
+        "F-C4-06",
+        "F-C6-01",
+        "F-C6-03"
+      ]
+    },
+    {
+      "id": "aggregation",
+      "group": "conclusion",
+      "level": "required",
+      "levelNote": null,
+      "condition": null,
+      "name": {
+        "es": "Agregación e incertidumbre",
+        "en": "Aggregation and uncertainty"
+      },
+      "oneLine": {
+        "es": "La regla que junta los veredictos de todos los casos en un número, con su margen de error.",
+        "en": "The rule that turns all case verdicts into a number, with its margin of error."
+      },
+      "explanation": {
+        "es": "La agregación puede ser tasa de aprobados, media, tasa de victorias o pass@k. Cada número debe ir con su error estándar y el número de casos. Un puntaje compuesto necesita su desglose por criterio.",
+        "en": "Aggregation can be pass rate, mean, win rate or pass@k. Every number needs its standard error and the number of cases. A composite score needs its per-criterion breakdown."
+      },
+      "whyItMatters": {
+        "es": "Solo 16 % de 445 benchmarks usa estimaciones de incertidumbre o pruebas estadísticas. Sin margen de error, una diferencia puede ser ruido.",
+        "en": "Only 16% of 445 benchmarks use uncertainty estimates or statistical tests. Without a margin of error, a difference may be noise."
+      },
+      "bestPractices": {
+        "es": [
+          "Reporta error estándar o intervalo y el número de casos.",
+          "Compara versiones de forma pareada, caso por caso.",
+          "Desglosa por criterio y por subgrupo."
+        ],
+        "en": [
+          "Report standard error or interval and the number of cases.",
+          "Compare versions paired, case by case.",
+          "Break down by criterion and subgroup."
+        ]
+      },
+      "commonMistakes": {
+        "es": [
+          "Comparar sin barras de error.",
+          "Puntaje compuesto opaco."
+        ],
+        "en": [
+          "Comparing without error bars.",
+          "Opaque composite score."
+        ]
+      },
+      "example": {
+        "es": "Tasa de aprobados en 40 casos: 92,5 % ± 4,2 (error estándar).",
+        "en": "Pass rate on 40 cases: 92.5% ± 4.2 (standard error)."
+      },
+      "synonyms": [
+        "metric",
+        "aggregation",
+        "summary",
+        "score",
+        "pass rate",
+        "win rate"
+      ],
+      "sources": [
+        "F-C1-07",
+        "F-C1-08",
+        "F-C4-03",
+        "F-C4-06",
+        "F-C6-02",
+        "F-C6-03"
+      ]
+    },
+    {
+      "id": "threshold",
+      "group": "conclusion",
+      "level": "recommended",
+      "levelNote": {
+        "es": "Ninguna fuente lo exige para toda eval; las guías de proceso lo recomiendan. Una eval de capacidad puede no tener umbral.",
+        "en": "No source requires it for every eval; process guides recommend it. A capability eval may have no threshold."
+      },
+      "condition": null,
+      "name": {
+        "es": "Umbral y compuertas",
+        "en": "Threshold and gates"
+      },
+      "oneLine": {
+        "es": "El valor desde el que un caso o la eval entera pasa; una compuerta bloquea un lanzamiento si falla.",
+        "en": "The value above which a case or the whole eval passes; a gate blocks a launch if it fails."
+      },
+      "explanation": {
+        "es": "Hay umbrales en dos niveles: por caso (nota 3 o más) y por eval entera (90 % de aprobados). Una eval de regresión suele exigir cerca de 100 %. Una de capacidad empieza baja y se lee la tendencia.",
+        "en": "Thresholds exist at two levels: per case (score 3 or above) and per eval (90% pass rate). A regression eval usually requires close to 100%. A capability eval starts low and you read the trend."
+      },
+      "whyItMatters": {
+        "es": "Sin umbral no hay decisión: el número se interpreta distinto cada vez.",
+        "en": "Without a threshold there is no decision: the number gets read differently each time."
+      },
+      "bestPractices": {
+        "es": [
+          "Escribe el umbral antes de correr.",
+          "Explica de dónde sale el número.",
+          "Marca qué criterios son compuertas."
+        ],
+        "en": [
+          "Write the threshold before running.",
+          "Explain where the number comes from.",
+          "Mark which criteria are gates."
+        ]
+      },
+      "commonMistakes": {
+        "es": [
+          "Perseguir el 100 % en todo: una eval que siempre pasa no informa."
+        ],
+        "en": [
+          "Chasing 100% everywhere: an eval that always passes tells you nothing."
+        ]
+      },
+      "example": {
+        "es": "Criterio 1 es compuerta: un solo caso que invente una política bloquea el lanzamiento.",
+        "en": "Criterion 1 is a gate: a single case that invents a policy blocks the launch."
+      },
+      "synonyms": [
+        "threshold",
+        "pass_threshold",
+        "gate",
+        "assertion",
+        "SLO"
+      ],
+      "sources": [
+        "F-C1-02",
+        "F-C1-03",
+        "F-C1-06",
+        "F-C3-01",
+        "F-C4-03",
+        "F-C4-07"
+      ]
+    },
+    {
+      "id": "baseline",
+      "group": "conclusion",
+      "level": "recommended",
+      "levelNote": null,
+      "condition": null,
+      "name": {
+        "es": "Línea base y comparación",
+        "en": "Baseline and comparison"
+      },
+      "oneLine": {
+        "es": "Contra qué se compara el resultado: versión anterior, otro modelo, azar o una persona.",
+        "en": "What the result is compared against: previous version, another model, chance or a person."
+      },
+      "explanation": {
+        "es": "Un número solo tiene sentido junto a otro. Los puntos de comparación típicos son el azar, el desempeño humano y la versión que ya está en producción.",
+        "en": "A number only makes sense next to another. Typical comparison points are chance, human performance and the version already in production."
+      },
+      "whyItMatters": {
+        "es": "Sin línea base no se sabe si un 80 % es bueno o malo.",
+        "en": "Without a baseline you cannot tell whether 80% is good or bad."
+      },
+      "bestPractices": {
+        "es": [
+          "Corre siempre la versión actual como línea base.",
+          "Da piso (azar) y techo (humano) cuando existan."
+        ],
+        "en": [
+          "Always run the current version as the baseline.",
+          "Give a floor (chance) and ceiling (human) when they exist."
+        ]
+      },
+      "commonMistakes": {
+        "es": [
+          "Reportar un número suelto."
+        ],
+        "en": [
+          "Reporting a number in isolation."
+        ]
+      },
+      "example": {
+        "es": "soporte-v1 pasa 85 %; soporte-v2 pasa 92,5 % en los mismos 40 casos.",
+        "en": "support-v1 passes 85%; support-v2 passes 92.5% on the same 40 cases."
+      },
+      "synonyms": [
+        "baseline",
+        "reference experiment",
+        "control",
+        "comparison"
+      ],
+      "sources": [
+        "F-C1-04",
+        "F-C1-10",
+        "F-C4-05",
+        "F-C4-06",
+        "F-C6-01"
+      ]
+    },
+    {
+      "id": "validation",
+      "group": "governance",
+      "level": "recommended",
+      "levelNote": {
+        "es": "Las fuentes la recomiendan como práctica; casi ninguna herramienta tiene un campo para ella.",
+        "en": "Sources recommend it as practice; almost no tool has a field for it."
+      },
+      "condition": null,
+      "name": {
+        "es": "Validación de la eval",
+        "en": "Eval validation"
+      },
+      "oneLine": {
+        "es": "Comprobar que la eval mide lo que dice: el juez coincide con personas, los casos tienen solución y no hay contaminación.",
+        "en": "Checking that the eval measures what it claims: the judge agrees with people, cases are solvable and there is no contamination."
+      },
+      "explanation": {
+        "es": "Para validar un juez se compara con etiquetas de un experto y se reportan dos tasas: cuántos fallos detecta (TPR) y cuántos aciertos respeta (TNR). El porcentaje de acuerdo solo engaña cuando casi todo pasa.",
+        "en": "To validate a judge, compare it with expert labels and report two rates: how many failures it catches (TPR) and how many passes it respects (TNR). Raw agreement misleads when almost everything passes."
+      },
+      "whyItMatters": {
+        "es": "El juez de Shopify empezó con kappa 0,02, casi azar, y llegó a 0,61 frente a 0,69 entre humanos. Un juez sin validar puede mentir con confianza.",
+        "en": "Shopify's judge started at kappa 0.02, near chance, and reached 0.61 versus 0.69 between humans. An unvalidated judge can lie confidently."
+      },
+      "bestPractices": {
+        "es": [
+          "Valida el juez contra etiquetas de un experto con conjuntos separados de desarrollo y prueba.",
+          "Reporta TPR y TNR, no solo acuerdo.",
+          "Vuelve a validar al cambiar de modelo juez.",
+          "Si la eval es pública, protege contra contaminación (cadena canario, casos ocultos)."
+        ],
+        "en": [
+          "Validate the judge against expert labels with separate dev and test splits.",
+          "Report TPR and TNR, not just agreement.",
+          "Re-validate when the judge model changes.",
+          "If the eval is public, guard against contamination (canary string, held-out cases)."
+        ]
+      },
+      "commonMistakes": {
+        "es": [
+          "Reportar solo % de acuerdo con clases desbalanceadas."
+        ],
+        "en": [
+          "Reporting only % agreement with imbalanced classes."
+        ]
+      },
+      "example": {
+        "es": "Un experto etiqueta 100 respuestas; el juez detecta 18 de 20 inventos (TPR 0,90) y aprueba 76 de 80 buenas (TNR 0,95).",
+        "en": "An expert labels 100 answers; the judge catches 18 of 20 inventions (TPR 0.90) and passes 76 of 80 good ones (TNR 0.95)."
+      },
+      "synonyms": [
+        "meta-evaluation",
+        "judge alignment",
+        "calibration",
+        "metascore",
+        "human agreement"
+      ],
+      "sources": [
+        "F-C1-01",
+        "F-C4-03",
+        "F-C4-04",
+        "F-C4-09",
+        "F-C5-09",
+        "F-C6-02",
+        "F-C6-05",
+        "F-C7-07"
+      ]
+    },
+    {
+      "id": "metadata",
+      "group": "governance",
+      "level": "recommended",
+      "levelNote": null,
+      "condition": null,
+      "name": {
+        "es": "Versión e historial",
+        "en": "Version and history"
+      },
+      "oneLine": {
+        "es": "Versión de la eval, historial de cambios y datos de cada corrida (modelo, prompt, fecha).",
+        "en": "Eval version, change history and per-run data (model, prompt, date)."
+      },
+      "explanation": {
+        "es": "Los criterios cambian al calificar, así que la eval necesita versión e historial. Cada corrida registra qué versión de la eval, del modelo y del prompt usó.",
+        "en": "Criteria drift while grading, so the eval needs a version and history. Each run records which eval, model and prompt version it used."
+      },
+      "whyItMatters": {
+        "es": "Sin versión no se pueden comparar resultados de dos semanas distintas.",
+        "en": "Without versions you cannot compare results from two different weeks."
+      },
+      "bestPractices": {
+        "es": [
+          "Versiona la eval y anota cada cambio con fecha.",
+          "Registra modelo, prompt y fecha en cada corrida.",
+          "Nombra un dueño."
+        ],
+        "en": [
+          "Version the eval and log each change with a date.",
+          "Record model, prompt and date in every run.",
+          "Name an owner."
+        ]
+      },
+      "commonMistakes": {
+        "es": [
+          "Cambiar la rúbrica sin volver a calificar lo anterior."
+        ],
+        "en": [
+          "Changing the rubric without re-grading earlier results."
+        ]
+      },
+      "example": {
+        "es": "v1.2 (2026-10-02): se agregó el criterio de traspaso a persona tras 3 fallos reales.",
+        "en": "v1.2 (2026-10-02): added the human-handoff criterion after 3 real failures."
+      },
+      "synonyms": [
+        "metadata",
+        "version",
+        "tags",
+        "changelog",
+        "run log"
+      ],
+      "sources": [
+        "F-C1-03",
+        "F-C1-09",
+        "F-C1-10",
+        "F-C4-03",
+        "F-C4-04",
+        "F-C6-09"
+      ]
+    },
+    {
+      "id": "documentation",
+      "group": "governance",
+      "level": "conditional",
+      "levelNote": null,
+      "condition": {
+        "es": "Obligatoria para publicar en un catálogo; recomendada en cualquier otro caso.",
+        "en": "Required to publish in a catalog; recommended otherwise."
+      },
+      "name": {
+        "es": "Ficha técnica",
+        "en": "Eval card"
+      },
+      "oneLine": {
+        "es": "Autoría, licencia, contacto, limitaciones y cómo citarla: lo que alguien más necesita para reusar la eval.",
+        "en": "Authorship, license, contact, limitations and how to cite: what someone else needs to reuse the eval."
+      },
+      "explanation": {
+        "es": "Sigue la idea de las hojas de datos (Datasheets), las fichas de modelo (Model Cards) y Eval Factsheets. Dice quién la hizo, con qué datos, para qué sirve y qué no permite concluir.",
+        "en": "It follows Datasheets, Model Cards and Eval Factsheets. It says who made it, with what data, what it is for and what it does not let you conclude."
+      },
+      "whyItMatters": {
+        "es": "Sin licencia ni limitaciones, nadie puede reusar la eval con seguridad.",
+        "en": "Without a license and limitations, no one can safely reuse the eval."
+      },
+      "bestPractices": {
+        "es": [
+          "Declara licencia, autoría, fecha y contacto.",
+          "Lista limitaciones y usos fuera de alcance.",
+          "Declara si hay datos de personas."
+        ],
+        "en": [
+          "State license, authorship, date and contact.",
+          "List limitations and out-of-scope uses.",
+          "State whether there is personal data."
+        ]
+      },
+      "commonMistakes": {
+        "es": [
+          "Publicar sin licencia.",
+          "Llenar la ficha automáticamente sin revisarla."
+        ],
+        "en": [
+          "Publishing without a license.",
+          "Auto-filling the card without review."
+        ]
+      },
+      "example": {
+        "es": "Autoría: equipo de soporte. Licencia CC BY 4.0. Limitación: solo cubre preguntas en español.",
+        "en": "Authors: support team. License CC BY 4.0. Limitation: covers Spanish questions only."
+      },
+      "synonyms": [
+        "eval card",
+        "datasheet",
+        "factsheet",
+        "model card",
+        "README"
+      ],
+      "sources": [
+        "F-C6-01",
+        "F-C6-08",
+        "F-C6-09",
+        "F-C6-10"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "from": "purpose",
+      "to": "criteria",
+      "kind": "defines",
+      "label": {
+        "es": "define",
+        "en": "defines"
+      }
+    },
+    {
+      "from": "purpose",
+      "to": "threshold",
+      "kind": "defines",
+      "label": {
+        "es": "fija",
+        "en": "sets"
+      }
+    },
+    {
+      "from": "purpose",
+      "to": "cases",
+      "kind": "defines",
+      "label": {
+        "es": "orienta",
+        "en": "guides"
+      }
+    },
+    {
+      "from": "cases",
+      "to": "system",
+      "kind": "flow",
+      "label": {
+        "es": "solo la entrada",
+        "en": "input only"
+      }
+    },
+    {
+      "from": "environment",
+      "to": "system",
+      "kind": "flow",
+      "label": {
+        "es": "estado inicial limpio",
+        "en": "clean initial state"
+      }
+    },
+    {
+      "from": "system",
+      "to": "output",
+      "kind": "flow",
+      "label": {
+        "es": "produce",
+        "en": "produces"
+      }
+    },
+    {
+      "from": "output",
+      "to": "grader",
+      "kind": "flow",
+      "label": {
+        "es": "se califica",
+        "en": "is graded"
+      }
+    },
+    {
+      "from": "criteria",
+      "to": "grader",
+      "kind": "flow",
+      "label": {
+        "es": "regla",
+        "en": "rule"
+      }
+    },
+    {
+      "from": "reference",
+      "to": "grader",
+      "kind": "flow",
+      "label": {
+        "es": "solo al calificador",
+        "en": "grader only"
+      }
+    },
+    {
+      "from": "grader",
+      "to": "verdict",
+      "kind": "flow",
+      "label": {
+        "es": "emite",
+        "en": "emits"
+      }
+    },
+    {
+      "from": "verdict",
+      "to": "trials",
+      "kind": "flow",
+      "label": {
+        "es": "por intento",
+        "en": "per trial"
+      }
+    },
+    {
+      "from": "trials",
+      "to": "aggregation",
+      "kind": "flow",
+      "label": {
+        "es": "k intentos",
+        "en": "k trials"
+      }
+    },
+    {
+      "from": "aggregation",
+      "to": "threshold",
+      "kind": "flow",
+      "label": {
+        "es": "se compara",
+        "en": "is compared"
+      }
+    },
+    {
+      "from": "baseline",
+      "to": "threshold",
+      "kind": "flow",
+      "label": {
+        "es": "contra",
+        "en": "against"
+      }
+    },
+    {
+      "from": "validation",
+      "to": "grader",
+      "kind": "control",
+      "label": {
+        "es": "TPR / TNR",
+        "en": "TPR / TNR"
+      }
+    },
+    {
+      "from": "validation",
+      "to": "cases",
+      "kind": "control",
+      "label": {
+        "es": "resolubles, sin contaminar",
+        "en": "solvable, uncontaminated"
+      }
+    },
+    {
+      "from": "metadata",
+      "to": "aggregation",
+      "kind": "control",
+      "label": {
+        "es": "versión de cada corrida",
+        "en": "per-run version"
+      }
+    }
+  ],
+  "decision": {
+    "name": {
+      "es": "Decisión",
+      "en": "Decision"
+    },
+    "oneLine": {
+      "es": "Lanzar, bloquear, investigar o retirar la eval.",
+      "en": "Ship, block, investigate or retire the eval."
+    }
+  }
+}

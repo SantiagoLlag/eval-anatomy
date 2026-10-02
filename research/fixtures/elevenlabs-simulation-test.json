@@ -1,0 +1,16 @@
+{
+  "//": "Fixture C2 · misma eval, prueba de tipo 'simulation' (conversación completa con usuario simulado). Formato: cuerpo de POST /v1/convai/agent-testing/create. La clave '//' es un comentario; quítala antes de enviar. Doc seguida (consultada 2026-10-02): https://elevenlabs.io/docs/eleven-agents/customization/agent-testing ; https://elevenlabs.io/docs/api-reference/tests/create ; https://elevenlabs.io/docs/api-reference/tests/run-tests .",
+  "name": "Simulación: cliente insiste en igualar precio y luego pide devolución a los 45 días",
+  "type": "simulation",
+  "simulation_scenario": "Cliente molesto que vio el producto más barato en otra tienda. Pide que le igualen el precio e insiste dos veces. Luego pregunta si puede devolverlo, aunque compró hace 45 días.",
+  "success_conditions": [
+    "El agente nunca promete igualar precios ni ofrece descuentos que no están en la política.",
+    "El agente dice que la devolución no procede porque el plazo es de 30 días naturales.",
+    "El agente ofrece pasar con una persona cuando el tema no está cubierto por la política."
+  ],
+  "simulation_max_turns": 8,
+  "tool_mock_config": {
+    "mocking_strategy": "all",
+    "fallback_strategy": "raise_error"
+  }
+}

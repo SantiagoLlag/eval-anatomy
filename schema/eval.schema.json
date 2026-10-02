@@ -1,0 +1,877 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/SantiagoLlag/eval-anatomy/schema/eval.schema.json",
+  "title": "Eval card (eval-anatomy/v1)",
+  "description": "Frontmatter of catalog/<id>/eval.md. Every top-level section maps to one part of the canonical eval anatomy (content/anatomy.json). Only identity fields are required by the schema; missing parts are allowed and shown as gaps by the visualizer and the linter (content/best-practices.json).",
+  "type": "object",
+  "required": [
+    "schema",
+    "id",
+    "name",
+    "version",
+    "language",
+    "summary",
+    "authors",
+    "created"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "const": "eval-anatomy/v1"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{1,62}$",
+      "description": "Unique slug; equals the catalog folder name."
+    },
+    "name": {
+      "type": "string",
+      "minLength": 3
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+(\\.\\d+)?$"
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "approved",
+        "deprecated"
+      ],
+      "default": "draft"
+    },
+    "language": {
+      "type": "string",
+      "description": "BCP 47 tag of the eval content, e.g. es, en, pt-BR."
+    },
+    "summary": {
+      "type": "string",
+      "maxLength": 280,
+      "description": "One sentence: what the eval checks."
+    },
+    "authors": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "github": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "owner": {
+      "type": "string",
+      "description": "Person who decides what 'good' means (anatomy: metadata)."
+    },
+    "license": {
+      "type": "string",
+      "description": "SPDX id, e.g. CC-BY-4.0, MIT."
+    },
+    "created": {
+      "type": "string",
+      "format": "date"
+    },
+    "updated": {
+      "type": "string",
+      "format": "date"
+    },
+    "contact": {
+      "type": "string",
+      "description": "Email, URL or issue tracker for errata."
+    },
+    "links": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "format": "uri"
+      }
+    },
+    "source_format": {
+      "type": "string",
+      "description": "Importer id if this card was converted from another format (e.g. promptfoo, vault-evals)."
+    },
+    "purpose": {
+      "description": "Anatomy part: purpose.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "question": {
+          "type": "string",
+          "description": "Yes/no question the eval answers."
+        },
+        "decision": {
+          "type": "string",
+          "description": "Decision the result enables."
+        },
+        "construct": {
+          "type": "string",
+          "description": "Observable definition of what is measured."
+        },
+        "out_of_scope": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "origin_failures": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Links or notes to the real failures/traces this eval comes from."
+        }
+      }
+    },
+    "taxonomy": {
+      "description": "Values from content/taxonomy.json. Arrays where an eval can take several values.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "origin": {
+          "enum": [
+            "public-benchmark",
+            "product-eval"
+          ]
+        },
+        "purpose": {
+          "enum": [
+            "capability",
+            "regression",
+            "comparison",
+            "risk-threshold"
+          ]
+        },
+        "moment": {
+          "enum": [
+            "offline",
+            "online",
+            "backtesting"
+          ]
+        },
+        "interaction": {
+          "enum": [
+            "static",
+            "dynamic"
+          ]
+        },
+        "structure": {
+          "enum": [
+            "single-turn",
+            "multi-turn",
+            "agent-outcome",
+            "agent-trajectory",
+            "component"
+          ]
+        },
+        "grader": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "code",
+              "similarity",
+              "llm-judge",
+              "human",
+              "user-signal"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "judgment": {
+          "enum": [
+            "pointwise",
+            "pointwise-reference",
+            "pairwise"
+          ]
+        },
+        "inputs_origin": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "real",
+              "synthetic",
+              "curated",
+              "adversarial"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "dimension": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "correctness",
+              "text-quality",
+              "reliability",
+              "safety",
+              "dangerous-capability",
+              "cost-latency",
+              "user-experience"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "system_type": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "chat",
+              "rag",
+              "coding-agent",
+              "conversational-agent",
+              "research-agent",
+              "computer-use-agent",
+              "summarization",
+              "classification",
+              "document-generation"
+            ]
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "system": {
+      "description": "Anatomy part: system under test and configuration.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "Exact prompt text or a relative path to a file in the eval folder."
+        },
+        "params": {
+          "type": "object"
+        },
+        "prompt_variants": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "fixed": {
+          "type": "boolean",
+          "default": true,
+          "description": "false when the eval checks artifacts from any producer (e.g. a document checker); then model/prompt are not expected."
+        }
+      }
+    },
+    "environment": {
+      "description": "Anatomy part: environment (agent evals).",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "reset_per_trial": {
+          "type": "boolean"
+        },
+        "simulated_user": {
+          "type": "string"
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "cases": {
+      "description": "Anatomy part: test cases.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "file": {
+          "type": "string",
+          "description": "Relative path to a JSONL/CSV with the cases."
+        },
+        "source": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "real",
+              "synthetic",
+              "curated",
+              "adversarial"
+            ]
+          }
+        },
+        "collected": {
+          "type": "string",
+          "description": "Date or period when cases were collected."
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Case types present, e.g. typical, edge, adversarial."
+        },
+        "synthetic_dimensions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "splits": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        },
+        "sampling": {
+          "type": "string",
+          "description": "Online evals: how traffic is sampled."
+        },
+        "examples": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "input"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "input": {},
+              "reference": {},
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "modality": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Input modality the grader needs, e.g. text, html, image, screenshot, pdf, audio."
+        }
+      }
+    },
+    "reference": {
+      "description": "Anatomy part: reference (golden answer or reference solution).",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "golden-answer",
+            "reference-solution",
+            "none"
+          ]
+        },
+        "produced_by": {
+          "enum": [
+            "human",
+            "llm",
+            "llm-reviewed",
+            "program"
+          ]
+        },
+        "visible_to_system": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "criteria": {
+      "description": "Anatomy part: criteria and rubric. One entry per criterion; each measures one failure mode.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "question"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "question": {
+            "type": "string",
+            "description": "Yes/no question."
+          },
+          "failure_mode": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string",
+            "description": "What evidence to look for."
+          },
+          "grader": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1
+              }
+            ],
+            "description": "id (or ids, in order) of entries in graders[]; e.g. [count-script, judge] when a script measures and a judge decides."
+          },
+          "pass_example": {
+            "type": "string"
+          },
+          "fail_example": {
+            "type": "string"
+          },
+          "gate": {
+            "type": "boolean",
+            "default": false
+          },
+          "applies_when": {
+            "type": "string"
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "URLs or short citations backing this criterion."
+          }
+        }
+      }
+    },
+    "graders": {
+      "description": "Anatomy part: grader.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "kind"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "code",
+              "similarity",
+              "llm-judge",
+              "human",
+              "user-signal"
+            ]
+          },
+          "description": {
+            "type": "string"
+          },
+          "script": {
+            "type": "string",
+            "description": "Relative path or command for code graders."
+          },
+          "model": {
+            "type": "string"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "Judge prompt text or relative path."
+          },
+          "same_model_as_system": {
+            "type": "boolean"
+          },
+          "swap_order": {
+            "type": "boolean"
+          },
+          "output_format": {
+            "enum": [
+              "reason-then-verdict",
+              "verdict-then-reason",
+              "verdict-only",
+              "score-only"
+            ]
+          }
+        }
+      }
+    },
+    "verdict": {
+      "description": "Anatomy part: scale and verdict.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "scale": {
+          "enum": [
+            "binary",
+            "binary-na-unknown",
+            "ordinal",
+            "score-0-1",
+            "pairwise"
+          ]
+        },
+        "levels": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "value"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "value": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              },
+              "anchor": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "pass_cut": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "na_rule": {
+          "type": "string"
+        }
+      }
+    },
+    "trials": {
+      "description": "Anatomy part: repeated trials.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "k": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "metric": {
+          "enum": [
+            "pass@k",
+            "pass^k",
+            "mean",
+            "majority"
+          ]
+        }
+      }
+    },
+    "aggregation": {
+      "description": "Anatomy part: aggregation and uncertainty.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "method": {
+          "type": "string",
+          "description": "e.g. pass-rate, mean, win-rate, weighted, banded-score."
+        },
+        "formula": {
+          "type": "string"
+        },
+        "uncertainty": {
+          "enum": [
+            "standard-error",
+            "confidence-interval",
+            "bootstrap",
+            "none"
+          ]
+        },
+        "breakdown": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "criterion",
+              "subgroup",
+              "case-tag"
+            ]
+          }
+        },
+        "bands": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "score"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "score": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              },
+              "min_pass_rate": {
+                "type": "number"
+              },
+              "anchor": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "Banded score: e.g. 5 = 100% pass, 4 >= 85%... with an anchor description per band."
+        }
+      }
+    },
+    "threshold": {
+      "description": "Anatomy part: threshold and gates.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "per_case": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "overall": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "gates": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "criteria"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "criteria": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "minItems": 1
+                  },
+                  "applies_when": {
+                    "type": "string"
+                  },
+                  "effect": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          },
+          "description": "criteria ids, or named gates with conditions, whose failure blocks the result."
+        },
+        "rationale": {
+          "type": "string"
+        }
+      }
+    },
+    "baseline": {
+      "description": "Anatomy part: baseline and comparison.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "previous-version",
+            "other-model",
+            "chance",
+            "human",
+            "none"
+          ]
+        },
+        "description": {
+          "type": "string"
+        },
+        "value": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "control_metrics": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "validation": {
+      "description": "Anatomy part: eval validation.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "judge_vs_human": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "n": {
+              "type": "integer"
+            },
+            "tpr": {
+              "type": "number"
+            },
+            "tnr": {
+              "type": "number"
+            },
+            "kappa": {
+              "type": "number"
+            },
+            "split": {
+              "type": "boolean"
+            },
+            "date": {
+              "type": "string"
+            }
+          }
+        },
+        "reference_solution": {
+          "type": "boolean"
+        },
+        "planted_failures": {
+          "type": "string",
+          "description": "Path or note to known-bad samples the eval must catch."
+        },
+        "contamination": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "canary": {
+              "type": "string"
+            },
+            "heldout": {
+              "type": "boolean"
+            },
+            "test": {
+              "type": "string"
+            }
+          }
+        },
+        "calibration": {
+          "type": "string",
+          "description": "How thresholds or the judge were calibrated (data, size, date)."
+        },
+        "meta_eval": {
+          "type": "string",
+          "description": "Result of reviewing the eval itself against a checklist (e.g. 12/12)."
+        }
+      }
+    },
+    "run": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "frequency": {
+          "enum": [
+            "every-change",
+            "daily",
+            "weekly",
+            "pre-release",
+            "manual"
+          ]
+        },
+        "command": {
+          "type": "string"
+        },
+        "ci": {
+          "type": "boolean"
+        }
+      }
+    },
+    "history": {
+      "description": "Anatomy part: version and history.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "version",
+          "date",
+          "change"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "version": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "change": {
+            "type": "string"
+          },
+          "author": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "sensitive_data": {
+      "enum": [
+        "none",
+        "personal",
+        "offensive",
+        "confidential",
+        "mixed"
+      ]
+    },
+    "maintenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "review_every": {
+          "type": "string"
+        },
+        "retire_when": {
+          "type": "string"
+        }
+      }
+    },
+    "applies_to": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Kinds of artifact or task the eval applies to (free text, e.g. web, pdf, slide deck)."
+    }
+  }
+}
