@@ -1,0 +1,96 @@
+{
+  "meta": {
+    "title": "eval-anatomy",
+    "description": "Visualizer and catalog of AI evals: the parts of an eval, what your eval lacks and how it runs."
+  },
+  "nav": {
+    "label": "Main",
+    "home": "Home",
+    "anatomy": "Anatomy",
+    "catalog": "Catalog",
+    "inspect": "Inspect",
+    "sources": "Sources"
+  },
+  "header": {
+    "github": "Code on GitHub",
+    "skip": "Skip to content"
+  },
+  "language": {
+    "label": "Language",
+    "es": "Español",
+    "en": "English"
+  },
+  "theme": {
+    "label": "Theme",
+    "system": "System",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "footer": {
+    "code": "Code: MIT license.",
+    "content": "Content: CC BY 4.0 license."
+  },
+  "home": {
+    "title": "What an eval is",
+    "lead": "An eval is a repeatable test that tells you whether an AI system does a task well. It has cases, a grader and a rule to decide.",
+    "body": "This site shows the 16 parts every eval has, checks which ones yours lacks and draws how it runs.",
+    "anatomyTitle": "Anatomy",
+    "anatomyText": "The 16 parts, with definitions, best practices and sources.",
+    "catalogTitle": "Catalog",
+    "catalogText": "Open evals anyone can review and improve.",
+    "inspectTitle": "Inspect",
+    "inspectText": "Upload or paste your eval and see which parts it has."
+  },
+  "anatomy": {
+    "title": "Anatomy of an eval",
+    "soon": "The diagram arrives in a later version. For now, here are the parts by group.",
+    "required": "required",
+    "recommended": "recommended",
+    "conditional": "conditional"
+  },
+  "catalog": {
+    "title": "Catalog",
+    "lead": "Evals in the catalog. Filters arrive in a later version.",
+    "empty": "There are no evals in the catalog yet.",
+    "open": "View eval",
+    "language": "Eval language",
+    "version": "Version",
+    "status": "Status",
+    "soon": "The anatomy, flow and review tabs arrive in a later version.",
+    "back": "Back to catalog"
+  },
+  "inspect": {
+    "title": "Inspect an eval",
+    "soon": "Here you will upload or paste an eval in any known format. It arrives in a later version."
+  },
+  "sources": {
+    "title": "Sources",
+    "lead": "All research text cites these sources. Each has an evidence level and a verification status.",
+    "filterLabel": "Filter by research lens",
+    "filterAll": "All",
+    "count": "{shown} of {total} sources",
+    "colTitle": "Title",
+    "colAuthors": "Authors",
+    "colEvidence": "Evidence",
+    "colStatus": "Status",
+    "colLink": "Link",
+    "open": "Open source",
+    "noLink": "No link",
+    "verified": "verified",
+    "unverified": "unverified",
+    "evidence": {
+      "guia-oficial": "Official guide",
+      "opinion-experta": "Expert opinion",
+      "experimento": "Experiment"
+    },
+    "status": {
+      "CONFIRMADA": "Confirmed",
+      "MATIZADA-corregida": "Qualified and corrected"
+    },
+    "note": "Titles and research lenses are in the original language of the research."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "back": "Go home"
+  }
+}

@@ -1,0 +1,90 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Design tokens. Defined once here; src/lib/tokens.test.ts checks AA contrast (>= 4.5:1)
+   of every group/grader colour against --background in both themes. */
+:root {
+  --background: #ffffff;
+  --foreground: #111827;
+  --muted: #f3f4f6;
+  --muted-foreground: #4b5563;
+  --border: #d1d5db;
+  --primary: #111827;
+  --primary-foreground: #ffffff;
+  --ring: #1d4ed8;
+
+  /* anatomy groups */
+  --group-intent: #6d28d9;
+  --group-inputs: #0369a1;
+  --group-judgment: #b45309;
+  --group-conclusion: #15803d;
+  --group-governance: #be123c;
+
+  /* grader kinds */
+  --grader-code: #0f766e;
+  --grader-similarity: #4d7c0f;
+  --grader-llm-judge: #a21caf;
+  --grader-human: #c2410c;
+  --grader-user-signal: #4338ca;
+}
+
+.dark {
+  --background: #0b1020;
+  --foreground: #f3f4f6;
+  --muted: #1a2133;
+  --muted-foreground: #aab2c0;
+  --border: #374151;
+  --primary: #f3f4f6;
+  --primary-foreground: #0b1020;
+  --ring: #93c5fd;
+
+  --group-intent: #c4b5fd;
+  --group-inputs: #7dd3fc;
+  --group-judgment: #fcd34d;
+  --group-conclusion: #86efac;
+  --group-governance: #fda4af;
+
+  --grader-code: #5eead4;
+  --grader-similarity: #bef264;
+  --grader-llm-judge: #f0abfc;
+  --grader-human: #fdba74;
+  --grader-user-signal: #a5b4fc;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-ring: var(--ring);
+  --color-group-intent: var(--group-intent);
+  --color-group-inputs: var(--group-inputs);
+  --color-group-judgment: var(--group-judgment);
+  --color-group-conclusion: var(--group-conclusion);
+  --color-group-governance: var(--group-governance);
+  --color-grader-code: var(--grader-code);
+  --color-grader-similarity: var(--grader-similarity);
+  --color-grader-llm-judge: var(--grader-llm-judge);
+  --color-grader-human: var(--grader-human);
+  --color-grader-user-signal: var(--grader-user-signal);
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+a:focus-visible,
+button:focus-visible,
+select:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
