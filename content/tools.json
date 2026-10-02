@@ -370,7 +370,7 @@
         ]
       },
       "fields": {
-        "purpose": "experiment_name",
+        "purpose": null,
         "cases": "ejemplo input",
         "system": "task",
         "output": "salida de task + spans",

@@ -703,12 +703,14 @@
       },
       "entonces": {
         "judgment": [
-          "pointwise"
+          "pointwise",
+          "pairwise"
         ],
         "inputs-origin": [
           "real"
         ]
       },
+      "nota": "sin referencia y con entradas reales",
       "fichas": [
         "F-C3-05"
       ]

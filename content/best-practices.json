@@ -7,7 +7,7 @@
     {
       "id": "purpose-declared",
       "part": "purpose",
-      "severity": "warn",
+      "severity": "error",
       "detection": "deterministic",
       "check": "purpose.question no vacío",
       "appliesIf": {},
@@ -250,19 +250,19 @@
       "part": "reference",
       "severity": "warn",
       "detection": "deterministic",
-      "check": "reference.produced_by presente; si es llm, debe ser llm-reviewed",
+      "check": "reference.produced_by presente y distinto de llm y llm-reviewed",
       "appliesIf": {
         "parts": [
           "reference"
         ]
       },
       "statement": {
-        "es": "Declara quién produjo la referencia; si fue un LLM, que la haya revisado una persona.",
-        "en": "States who produced the reference; if an LLM did, a person reviewed it."
+        "es": "Declara quién produjo la referencia; las respuestas esperadas no las genera un LLM.",
+        "en": "States who produced the reference; expected answers are not LLM-generated."
       },
       "rationale": {
-        "es": "Una referencia generada por LLM hereda los sesgos del modelo.",
-        "en": "An LLM-generated reference inherits the model's biases."
+        "es": "Una referencia generada por LLM hereda los sesgos del modelo; las fuentes no hacen excepción por revisión humana.",
+        "en": "An LLM-generated reference inherits the model's biases; sources make no exception for human review."
       },
       "sources": [
         "F-C4-02",
@@ -635,13 +635,8 @@
       "part": "trials",
       "severity": "warn",
       "detection": "deterministic",
-      "check": "trials.k >= 2 y trials.metric presente",
-      "appliesIf": {
-        "structure": [
-          "agent-outcome",
-          "agent-trajectory"
-        ]
-      },
+      "check": "si taxonomy.structure es agent-* o system.params.temperature > 0: trials.k >= 2 y trials.metric presente",
+      "appliesIf": {},
       "statement": {
         "es": "Si la salida varía, corre varios intentos y declara k y la métrica (pass@k o pass^k).",
         "en": "If output varies, run several trials and state k and the metric (pass@k or pass^k)."
@@ -969,7 +964,9 @@
       "severity": "error",
       "detection": "deterministic",
       "check": "name, summary, authors y created presentes",
-      "appliesIf": {},
+      "appliesIf": {
+        "catalog": true
+      },
       "statement": {
         "es": "Tiene nombre, descripción, autoría y fecha.",
         "en": "Has a name, description, authors and date."
@@ -1010,7 +1007,9 @@
       "severity": "error",
       "detection": "deterministic",
       "check": "cuerpo con sección de cómo correrla o run.command presente",
-      "appliesIf": {},
+      "appliesIf": {
+        "catalog": true
+      },
       "statement": {
         "es": "Describe paso a paso cómo correrla.",
         "en": "Describes step by step how to run it."
